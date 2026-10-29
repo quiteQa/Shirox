@@ -35,6 +35,8 @@ struct ModuleDefinition: Codable, Identifiable, Equatable {
     var isLocalPlayback: Bool { supportsLocalPlayback == true }
     var isJellyfin: Bool { supportsJellyfin == true }
     var isManga: Bool { type == "mangas" || type == "manga" }
+    var isMetadata: Bool { type == "metadata" }
+    var isAnimePlayback: Bool { !isManga && !isMetadata }
 
     /// The source site's page for a title, from the `href` this module gave it — for opening in a
     /// browser. Relative paths (`/anime/1`, `anime/1`) resolve against `baseUrl`; bare ids

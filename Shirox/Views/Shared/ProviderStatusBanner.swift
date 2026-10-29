@@ -117,6 +117,11 @@ struct ProviderMenuButton: View {
     @ObservedObject private var manager = ProviderManager.shared
     @ObservedObject private var discovery = DiscoverySource.shared
     @ObservedObject private var simklAuth = SimklAuthManager.shared
+    @ObservedObject private var modules = ModuleManager.shared
+
+    private var sourceName: String {
+        discovery.usesMetadata ? (discovery.metadataModule?.sourceName ?? String(localized: "modules.metadata_source")) : shown.displayName
+    }
 
     /// What Home and Search come from: Simkl when chosen, else the first of the chain.
     private var shown: ProviderType {
@@ -182,10 +187,15 @@ struct ProviderMenuButton: View {
             if simklAuth.isLoggedIn {
                 Button { discovery.chooseSimkl() } label: { label(.simkl) }
             }
+            ForEach(modules.modules.filter(\.isMetadata)) { module in
+                Button { discovery.chooseMetadataModule(module) } label: { Text(module.sourceName) }
+            }
         } label: {
             #if os(macOS)
-            let providerLabel = Label { Text(shown.displayName) } icon: {
-                cachedIcon(shown) ?? Image(icon: "sparkles.tv")
+            let providerLabel = Label { Text(sourceName) } icon: {
+                if discovery.usesMetadata { Image(icon: "puzzlepiece.extension") } else {
+                    cachedIcon(shown) ?? Image(icon: "sparkles.tv")
+                }
             }
             if style == .iconOnly {
                 providerLabel.labelStyle(.iconOnly)
@@ -194,12 +204,16 @@ struct ProviderMenuButton: View {
             }
             #else
             HStack(spacing: 6) {
-                CachedAsyncImage(urlString: shown.iconURL)
-                    .frame(width: 20, height: 20)
-                    .background(shown == .simkl ? Color.white : Color.clear)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                if discovery.usesMetadata {
+                    IconView("puzzlepiece.extension").frame(width: 20, height: 20)
+                } else {
+                    CachedAsyncImage(urlString: shown.iconURL)
+                        .frame(width: 20, height: 20)
+                        .background(shown == .simkl ? Color.white : Color.clear)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                }
                 if style != .iconOnly {
-                    Text(shown.displayName)
+                    Text(sourceName)
                         .font(.subheadline.weight(.semibold))
                 }
                 IconView("chevron.down").font(.caption2)

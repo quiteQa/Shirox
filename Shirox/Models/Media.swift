@@ -56,6 +56,8 @@ struct Media: Identifiable, Codable, Equatable, Hashable, Sendable {
     var tvdbID: Int?
     /// A Simkl show's or movie's TMDB record, for a logo TVDB doesn't have.
     var tmdbID: Int?
+    /// Namespaced metadata identity; never passed to AniList/MAL tracking or TVDB.
+    var moduleMetadata: ModuleMetadataIdentity?
 
     var uniqueId: String {
         // A Simkl show or movie is keyed by Simkl id, and "simkl-52991" is already a Simkl anime

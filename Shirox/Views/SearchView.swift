@@ -30,7 +30,7 @@ struct SearchView: View {
     @State private var pendingVideoURL: URL?
     @State private var pendingVideoTitle: String?
 
-    private var isLocalModule: Bool { moduleManager.activeModule?.isLocalPlayback == true }
+    private var isLocalModule: Bool { !discovery.usesMetadata && moduleManager.activeModule?.isLocalPlayback == true }
 
     private var usesToolbarSearch: Bool {
         #if os(macOS)
@@ -39,7 +39,7 @@ struct SearchView: View {
         false
         #endif
     }
-    private var isJellyfinModule: Bool { moduleManager.activeModule?.isJellyfin == true }
+    private var isJellyfinModule: Bool { !discovery.usesMetadata && moduleManager.activeModule?.isJellyfin == true }
 
     private var platformBackground: Color {
         #if os(iOS)
@@ -68,7 +68,7 @@ struct SearchView: View {
         #endif
     }
 
-    private var usingModule: Bool { moduleManager.activeModule != nil }
+    private var usingModule: Bool { !discovery.usesMetadata && moduleManager.activeModule != nil }
     private var primaryProvider: ProviderType { providerManager.orderedProviders.first?.providerType ?? .anilist }
     /// What Search draws on without a module: Simkl when chosen, else the chain's first.
     private var shownProvider: ProviderType { discovery.usesSimkl ? .simkl : primaryProvider }
@@ -110,7 +110,7 @@ struct SearchView: View {
                     }
                 }
                 .onChangeOf(moduleManager.moduleReadyId) { newId in
-                    guard !vm.query.isEmpty, newId != nil else { return }
+                    guard !discovery.usesMetadata, !vm.query.isEmpty, newId != nil else { return }
                     vm.search(usingModule: true)
                 }
                 .onChangeOf(moduleManager.activeModule) { newModule in
@@ -124,6 +124,10 @@ struct SearchView: View {
                 .onChangeOf(discovery.usesSimkl) {
                     guard !vm.query.isEmpty, !usingModule else { return }
                     vm.search(usingModule: false)
+                }
+                .onChangeOf(discovery.sourceID) { _ in
+                    guard !vm.query.isEmpty else { return }
+                    vm.search(usingModule: usingModule)
                 }
         }
         .adaptiveSheet(isPresented: $showModuleList) {
@@ -164,7 +168,9 @@ struct SearchView: View {
                 // Nothing typed yet: give people somewhere to go, with any recent searches
                 // carried along at the top. Recents used to be a full-height list of their own,
                 // which meant one previous search hid browsing entirely.
-                if discovery.usesSimkl {
+                if discovery.usesMetadata {
+                    MetadataCatalogView(catalog: .topRated)
+                } else if discovery.usesSimkl {
                     SimklBrowseView(
                         columns: columns,
                         recentSearches: history.queries,
@@ -365,7 +371,7 @@ struct SearchView: View {
                 if !vm.aniListResults.isEmpty {
                     ForEach(vm.aniListResults) { media in
                         NavigationLink {
-                            AniListDetailView(mediaId: media.id, preloadedMedia: media)
+                            MediaDestination(media: media)
                         } label: {
                             AniListCardView(media: media)
                         }
@@ -528,7 +534,9 @@ struct SearchView: View {
             HStack(spacing: 6) {
                 // Icon container (rounded)
                 Group {
-                    if usingModule {
+                    if discovery.usesMetadata {
+                        fallbackIcon
+                    } else if usingModule {
                         if let iconUrlString = moduleManager.activeModule?.iconUrl, !iconUrlString.isEmpty {
                             CachedAsyncImage(urlString: iconUrlString)
                         } else {
@@ -549,7 +557,9 @@ struct SearchView: View {
 
                 // Text label
                 if buttonStyle != .iconOnly {
-                    Text(usingModule ? (moduleManager.activeModule?.sourceName ?? String(localized: "modules.module")) : shownProvider.displayName)
+                    Text(discovery.usesMetadata
+                         ? (discovery.metadataModule?.sourceName ?? String(localized: "modules.metadata_source"))
+                         : usingModule ? (moduleManager.activeModule?.sourceName ?? String(localized: "modules.module")) : shownProvider.displayName)
                         .font(.callout)
                         .fontWeight(.medium)
                         // A toolbar item takes whatever width it asks for, so a long module name

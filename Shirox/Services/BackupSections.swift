@@ -165,7 +165,7 @@ struct SettingsBackupSection: BackupSection {
     static let stringKeys = [
         "librarySortOrder", "libraryStatusOrder", "mangaReadingMode",
         "preferredQuality", "titleLanguagePriority", SyncTargets.key,
-        DiscoverySource.choiceKey, DiscoverySource.kindKey, "playerHoldAction",
+        DiscoverySource.choiceKey, DiscoverySource.kindKey, DiscoverySource.metadataKey, "playerHoldAction",
         AppTint.key, AppColorScheme.key, AppTab.orderKey, AppTab.hiddenKey, AppTab.launchKey,
         PullToRefreshStyle.key, "discordApplicationID"
     ]

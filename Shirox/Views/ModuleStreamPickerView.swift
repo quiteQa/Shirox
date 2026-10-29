@@ -40,7 +40,7 @@ struct ModuleStreamPickerView: View {
         if useDefaultExtension, let active = moduleManager.activeModule {
             return [active]
         }
-        return moduleManager.modules
+        return moduleManager.modules.filter { !$0.isMetadata }
     }
 
     var body: some View {

@@ -1,3 +1,9 @@
+> **Bangumi 元数据修改版**：此 Fork 将 Bangumi 接入首页、搜索和动画详情，并为 `type: "metadata"` 模块使用元数据健康检查，避免请求视频串流。
+>
+> [下载已验证的未签名 iOS 安装包](https://github.com/quiteQa/shirox-bangumi/actions/runs/40844088237/artifacts/12883669458)（解压后自行签名安装）· [设置与验证记录](docs/BANGUMI.md) · [Bangumi 模块仓库](https://github.com/quiteQa/shirox-bangumi)
+>
+> 安装此修改版后，导入或刷新模块至 **0.3.0**：`https://raw.githubusercontent.com/quiteQa/shirox-bangumi/main/bangumi.json`，然后在模块页或首页来源菜单选择 Bangumi。下方保留的上游安装链接指向官方版本。
+
 <div align="center">
 
 # 白 Shirox
@@ -109,6 +115,11 @@ wider grids, and full-screen playback.
 ---
 
 ## Modules
+
+This modified source also supports **metadata modules** (`type: "metadata"`) for
+Home, Search and title details, separately from playback modules. See
+[Bangumi setup and the metadata contract](docs/BANGUMI.md). A metadata health check
+validates metadata without requiring a video stream.
 
 Modules are small JSON manifests pointing at a JavaScript file that knows how to search a site and
 resolve streams or chapters. Add one under **Settings → Modules** by pasting its manifest URL.

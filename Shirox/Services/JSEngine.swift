@@ -40,6 +40,7 @@ final class JSEngine: ObservableObject {
     // MARK: - Module Loading
 
     func loadModule(_ module: ModuleDefinition) async throws {
+        guard !module.isMetadata else { throw ProviderError.unsupported }
         // Clear cookies so the previous module's session doesn't bleed into this one
         HTTPCookieStorage.shared.cookies?.forEach { HTTPCookieStorage.shared.deleteCookie($0) }
         NetworkFetchManager.clearCookies()

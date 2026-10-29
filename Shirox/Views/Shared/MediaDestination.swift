@@ -5,17 +5,21 @@ struct MediaDestination: View {
     let media: Media
 
     enum Target: Equatable {
+        case metadata(ModuleMetadataIdentity)
         case simklTitle(simklID: Int, kind: MediaKind)
         case anime(id: Int)
     }
 
     static func target(for media: Media) -> Target {
+        if let identity = media.moduleMetadata { return .metadata(identity) }
         if let kind = media.simklTitleKind { return .simklTitle(simklID: media.id, kind: kind) }
         return .anime(id: media.id)
     }
 
     var body: some View {
         switch Self.target(for: media) {
+        case .metadata(let identity):
+            MetadataDetailView(identity: identity, seed: media)
         case .simklTitle(let simklID, let kind):
             SimklTitlePage(simklID: simklID, kind: kind, seedTitle: media.title.displayTitle,
                            seedPosterURL: media.coverImage.large)

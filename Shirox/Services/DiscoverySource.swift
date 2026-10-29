@@ -13,8 +13,9 @@ final class DiscoverySource: ObservableObject {
     // Nonisolated: the settings backup lists them outside the main actor.
     nonisolated static let choiceKey = "discoverySource"
     nonisolated static let kindKey = "simklDiscoverKind"
+    nonisolated static let metadataKey = "metadataModuleID"
 
-    enum Choice: String { case providers, simkl }
+    enum Choice: String { case providers, simkl, metadata }
 
     @Published private(set) var choice: Choice
     /// Home's and Search's Anime / Shows / Movies pills.
@@ -23,6 +24,17 @@ final class DiscoverySource: ObservableObject {
     }
     /// Simkl chosen, and signed in to it. Signing out falls back to the chain by itself.
     @Published private(set) var usesSimkl = false
+    @Published private(set) var usesMetadata = false
+    @Published private(set) var metadataModuleID: String?
+
+    var metadataModule: ModuleDefinition? {
+        ModuleManager.shared.modules.first { $0.id == metadataModuleID && $0.isMetadata }
+    }
+
+    var sourceID: String {
+        if usesMetadata { return "metadata-\(metadataModuleID ?? "")" }
+        return usesSimkl ? "simkl-\(simklKind.rawValue)" : "providers"
+    }
 
     private let defaults: UserDefaults
     private let selectProvider: @MainActor (ProviderType) -> Void
@@ -35,6 +47,7 @@ final class DiscoverySource: ObservableObject {
         self.defaults = defaults
         self.selectProvider = selectProvider
         choice = Choice(rawValue: defaults.string(forKey: Self.choiceKey) ?? "") ?? .providers
+        metadataModuleID = defaults.string(forKey: Self.metadataKey)
         let stored = MediaKind(rawValue: defaults.string(forKey: Self.kindKey) ?? "")
         simklKind = stored.flatMap { MediaKind.simklKinds.contains($0) ? $0 : nil } ?? .anime
         (signedIn ?? SimklAuthManager.shared.$isLoggedIn.eraseToAnyPublisher())
@@ -43,10 +56,25 @@ final class DiscoverySource: ObservableObject {
                 self?.update()
             }
             .store(in: &cancellables)
+        ModuleManager.shared.$modules
+            .dropFirst()
+            .sink { [weak self] _ in
+                // @Published emits before the array is assigned.
+                Task { @MainActor [weak self] in self?.update() }
+            }
+            .store(in: &cancellables)
+        update()
     }
 
     func chooseSimkl() {
         set(.simkl)
+    }
+
+    func chooseMetadataModule(_ module: ModuleDefinition) {
+        guard module.isMetadata else { return }
+        metadataModuleID = module.id
+        defaults.set(module.id, forKey: Self.metadataKey)
+        set(.metadata)
     }
 
     /// Back to the chain, with `type` first in it.
@@ -64,6 +92,7 @@ final class DiscoverySource: ObservableObject {
     /// After a profile switch: what the new profile saved, and nothing of the last one's.
     func reloadForProfileSwitch() {
         choice = Choice(rawValue: defaults.string(forKey: Self.choiceKey) ?? "") ?? .providers
+        metadataModuleID = defaults.string(forKey: Self.metadataKey)
         let stored = MediaKind(rawValue: defaults.string(forKey: Self.kindKey) ?? "")
         simklKind = stored.flatMap { MediaKind.simklKinds.contains($0) ? $0 : nil } ?? .anime
         update()
@@ -72,5 +101,7 @@ final class DiscoverySource: ObservableObject {
     private func update() {
         let value = choice == .simkl && signedIn
         if usesSimkl != value { usesSimkl = value }
+        let metadata = choice == .metadata && metadataModule != nil
+        if usesMetadata != metadata { usesMetadata = metadata }
     }
 }

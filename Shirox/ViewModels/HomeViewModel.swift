@@ -15,6 +15,8 @@ final class HomeViewModel: ObservableObject {
     @Published private(set) var feedProvider: ProviderType?
 
     private var loaded = false
+    private var loadedSourceID: String?
+    private var generation = UUID()
     private var cancellables = Set<AnyCancellable>()
 
     init() {
@@ -35,23 +37,43 @@ final class HomeViewModel: ObservableObject {
     }
 
     func load() async {
-        guard !loaded else { return }
+        let sourceID = DiscoverySource.shared.sourceID
+        guard !loaded || loadedSourceID != sourceID else { return }
+        let requestID = UUID()
+        generation = requestID
         isLoading = true
         error = nil
+        if let loadedSourceID, loadedSourceID != sourceID {
+            apply(HomeFeed(trending: [], seasonal: [], lastSeason: [], popular: [], topRated: []), from: nil)
+        }
 
         do {
+            if let module = DiscoverySource.shared.metadataModule, DiscoverySource.shared.usesMetadata {
+                let service = ModuleMetadataService(module: module)
+                let ranked = try await service.browse(.topRated)
+                let newest = try await service.browse(.newest)
+                guard generation == requestID, DiscoverySource.shared.sourceID == sourceID else { return }
+                apply(HomeFeed(trending: ranked, seasonal: newest, lastSeason: [], popular: [], topRated: ranked), from: nil)
+                loaded = true
+                loadedSourceID = sourceID
+                isLoading = false
+                return
+            }
             // One call, not five. Each provider decides how few requests that actually takes
             // (AniList: a single aliased GraphQL query; MAL: five, paced). Going through
             // `call` once also means the whole screen comes from one provider — five separate
             // calls could each fall back independently and leave Home showing a mix.
             let feed = try await ProviderManager.shared.call { try await $0.homeFeed() }
+            guard generation == requestID, DiscoverySource.shared.sourceID == sourceID else { return }
             let type = ProviderManager.shared.primary?.providerType
             apply(feed, from: type)
             if let type {
                 HomeCacheStore.shared.save(feed: feed, provider: type)
             }
             loaded = true
+            loadedSourceID = sourceID
         } catch {
+            guard generation == requestID, DiscoverySource.shared.sourceID == sourceID else { return }
             self.error = error.localizedDescription
             // A reload that fails (e.g. right after switching providers) leaves whatever is on
             // screen untouched — nothing above clears it on failure, by design, so a background
@@ -83,6 +105,10 @@ final class HomeViewModel: ObservableObject {
     // MARK: - Private
 
     private func seedFromCache() {
+        if DiscoverySource.shared.usesMetadata {
+            apply(HomeFeed(trending: [], seasonal: [], lastSeason: [], popular: [], topRated: []), from: nil)
+            return
+        }
         guard let type = ProviderManager.shared.primary?.providerType,
               let cached = HomeCacheStore.shared.snapshot(provider: type) else { return }
         apply(cached.feed, from: type)

@@ -522,7 +522,7 @@ struct ModuleListView: View {
         // Simkl is the Home and Search source beside the AniList/MAL chain, not a link in it.
         let isChosen = type == .simkl
             ? discovery.usesSimkl
-            : !discovery.usesSimkl && providerManager.orderedProviders.first?.providerType == type
+            : !discovery.usesSimkl && !discovery.usesMetadata && providerManager.orderedProviders.first?.providerType == type
         let isSelected = moduleManager.activeModule == nil
         let isDown = isChosen && type != .simkl && providerManager.fallbackActive
 
@@ -600,7 +600,9 @@ struct ModuleListView: View {
 
     // MARK: - Module Row
     private func moduleRow(_ module: ModuleDefinition) -> some View {
-        let isActive = moduleManager.activeModule?.id == module.id
+        let isActive = module.isMetadata
+            ? discovery.usesMetadata && discovery.metadataModuleID == module.id
+            : moduleManager.activeModule?.id == module.id
         return Button {
             if !isActive {
                 moduleManager.selectModule(module)
@@ -621,6 +623,9 @@ struct ModuleListView: View {
                     Text(module.sourceName).font(.headline)
                     HStack(spacing: 6) {
                         Text("v\(module.version)").font(.caption).foregroundStyle(.secondary)
+                        if module.isMetadata {
+                            Text("modules.metadata_source").font(.caption).foregroundStyle(.secondary)
+                        }
                         if let author = module.author, !author.name.isEmpty {
                             Text("·").font(.caption).foregroundStyle(.secondary)
                             Text(author.name).font(.caption).foregroundStyle(.secondary)

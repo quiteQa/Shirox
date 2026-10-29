@@ -30,6 +30,14 @@ final class SearchViewModel: ObservableObject {
             .dropFirst()
             .sink { [weak self] _ in self?.clearResults() }
             .store(in: &cancellables)
+        DiscoverySource.shared.$metadataModuleID
+            .dropFirst()
+            .sink { [weak self] _ in self?.clearResults() }
+            .store(in: &cancellables)
+        DiscoverySource.shared.$usesMetadata
+            .dropFirst()
+            .sink { [weak self] _ in self?.clearResults() }
+            .store(in: &cancellables)
     }
 
     func search(usingModule: Bool) {
@@ -46,7 +54,13 @@ final class SearchViewModel: ObservableObject {
         simklFailedKinds = []
         searchTask = Task {
             do {
-                if usingModule {
+                if let module = DiscoverySource.shared.metadataModule, DiscoverySource.shared.usesMetadata {
+                    let service = ModuleMetadataService(module: module)
+                    let result = try await service.search(q)
+                    if !Task.isCancelled {
+                        aniListResults = result.map { $0.media(moduleID: module.id) }
+                    }
+                } else if usingModule {
                     CloudflareBypassManager.shared.pendingVerificationURL = nil
                     var res: [SearchItem]
                     do {

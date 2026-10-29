@@ -40,7 +40,7 @@ struct DownloadModulePickerView: View {
     var body: some View {
         NavigationStack {
             ModulePickerRows {
-                ForEach(moduleManager.modules) { module in
+                ForEach(moduleManager.modules.filter { !$0.isMetadata }) { module in
                     DownloadModuleRow(
                         module: module,
                         mediaId: mediaId,

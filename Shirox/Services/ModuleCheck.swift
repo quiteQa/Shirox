@@ -20,7 +20,7 @@ enum ModuleCheckResult: Codable, Equatable {
 }
 
 enum ModuleCheckStep: String, Codable {
-    case load, search, episodes, streams
+    case load, search, episodes, streams, metadata
 
     var label: String {
         switch self {
@@ -28,6 +28,7 @@ enum ModuleCheckStep: String, Codable {
         case .search: return String(localized: "common.search")
         case .episodes: return String(localized: "common.episodes")
         case .streams: return String(localized: "modules.streams")
+        case .metadata: return String(localized: "modules.metadata_source")
         }
     }
 }
@@ -49,6 +50,9 @@ enum ModuleCheck {
             group.addTask { await run(module) }
             group.addTask {
                 try? await Task.sleep(nanoseconds: UInt64(timeout * 1_000_000_000))
+                if module.isMetadata {
+                    return .failed(step: .metadata, reason: String(localized: "modules.metadata_timed_out"))
+                }
                 return .failed(step: .streams, reason: String(localized: "modules.didnt_reach_a_stream_in \(Int(timeout))"))
             }
             let first = await group.next() ?? .failed(step: .load, reason: String(localized: "modules.didnt_run"))
@@ -58,6 +62,19 @@ enum ModuleCheck {
     }
 
     private static func run(_ module: ModuleDefinition) async -> ModuleCheckResult {
+        if module.isMetadata {
+            do {
+                let service = ModuleMetadataService(module: module)
+                let results = try await service.search(queries[0])
+                guard let first = results.first else {
+                    return .failed(step: .search, reason: String(localized: "modules.metadata_empty"))
+                }
+                _ = try await service.detail(id: first.id)
+                return .passed
+            } catch {
+                return .failed(step: .metadata, reason: error.localizedDescription)
+            }
+        }
         let runner = ModuleJSRunner()
         do {
             try await runner.load(module: module)

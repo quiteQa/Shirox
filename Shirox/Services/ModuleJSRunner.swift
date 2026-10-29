@@ -147,6 +147,13 @@ final class ModuleJSRunner {
         return StreamProbe.checks(module?.ext?.kind) ? await StreamProbe.playable(streams) : streams
     }
 
+    /// Structured metadata calls have no access to the shared playback runner.
+    func readMetadata<T: Decodable>(_ function: String, args: [Any]) async throws -> T {
+        let json = try await callAsyncJS(function, args: args)
+        guard let data = json.data(using: .utf8) else { throw ProviderError.unsupported }
+        return try JSONDecoder().decode(T.self, from: data)
+    }
+
     // MARK: - Promise resolution
 
     private func callAsyncJS(_ functionName: String, args: [Any]) async throws -> String {

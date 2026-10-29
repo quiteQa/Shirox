@@ -128,6 +128,7 @@ struct ModuleImportView: View {
                 Picker("settings.type", selection: $kind) {
                     Text("common.anime").tag("anime")
                     Text("common.manga").tag("manga")
+                    Text("modules.metadata_source").tag("metadata")
                 }
                 TextField("modules.language_e_g_english", text: $language)
                 urlField(String(localized: "modules.website"), text: $baseUrl)
@@ -279,7 +280,7 @@ struct ModuleImportView: View {
         authorIcon = module.author?.icon ?? ""
         iconURL = module.iconUrl ?? ""
         if let data = module.iconData.flatMap({ Data(base64Encoded: $0) }) { iconData = data }
-        kind = module.isManga ? "manga" : "anime"
+        kind = module.isMetadata ? "metadata" : module.isManga ? "manga" : "anime"
         language = module.language ?? ""
         baseUrl = module.baseUrl ?? ""
         searchBaseUrl = module.searchBaseUrl ?? ""

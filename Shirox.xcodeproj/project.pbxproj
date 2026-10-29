@@ -1227,6 +1227,19 @@
 		FF17377B81BE09D95EFB573C /* MediaDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = F448D8EACA889534B3F509C6 /* MediaDestination.swift */; };
 		FF2F81D3615940308F608BD6 /* SubtitleRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881989087D5AEFEADB010420 /* SubtitleRouting.swift */; };
 		FFFEDFBBB37573B50961C268 /* ExtensionRepoLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D967E193B36DBB828CDEC9D /* ExtensionRepoLoader.swift */; };
+		FEEE00000000000000000002 /* ModuleMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE00000000000000000001 /* ModuleMetadata.swift */; };
+		FEEE00000000000000000003 /* ModuleMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE00000000000000000001 /* ModuleMetadata.swift */; };
+		FEEE00000000000000000004 /* ModuleMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE00000000000000000001 /* ModuleMetadata.swift */; };
+		FEEE00000000000000000006 /* ModuleMetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE00000000000000000005 /* ModuleMetadataService.swift */; };
+		FEEE00000000000000000007 /* ModuleMetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE00000000000000000005 /* ModuleMetadataService.swift */; };
+		FEEE00000000000000000008 /* ModuleMetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE00000000000000000005 /* ModuleMetadataService.swift */; };
+		FEEE0000000000000000000A /* MetadataDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE00000000000000000009 /* MetadataDetailView.swift */; };
+		FEEE0000000000000000000B /* MetadataDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE00000000000000000009 /* MetadataDetailView.swift */; };
+		FEEE0000000000000000000C /* MetadataDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE00000000000000000009 /* MetadataDetailView.swift */; };
+		FEEE0000000000000000000E /* MetadataCatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE0000000000000000000D /* MetadataCatalogView.swift */; };
+		FEEE0000000000000000000F /* MetadataCatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE0000000000000000000D /* MetadataCatalogView.swift */; };
+		FEEE00000000000000000010 /* MetadataCatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE0000000000000000000D /* MetadataCatalogView.swift */; };
+		FEEE00000000000000000012 /* MetadataModuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE00000000000000000011 /* MetadataModuleTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1788,6 +1801,11 @@
 		FE1AC518A4DC04950FDBEA96 /* DiscordSettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DiscordSettingsView.swift; sourceTree = "<group>"; };
 		FF4C00BAA407FF400B069044 /* JellyfinEntryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JellyfinEntryView.swift; sourceTree = "<group>"; };
 		FFFC46805FE79CD18D6269BA /* SimklOAuthTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SimklOAuthTests.swift; sourceTree = "<group>"; };
+		FEEE00000000000000000001 /* ModuleMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleMetadata.swift; sourceTree = "<group>"; };
+		FEEE00000000000000000005 /* ModuleMetadataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleMetadataService.swift; sourceTree = "<group>"; };
+		FEEE00000000000000000009 /* MetadataDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataDetailView.swift; sourceTree = "<group>"; };
+		FEEE0000000000000000000D /* MetadataCatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataCatalogView.swift; sourceTree = "<group>"; };
+		FEEE00000000000000000011 /* MetadataModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataModuleTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1897,6 +1915,7 @@
 				51CCA7446EA6D04AED7FAE2B /* SimklPlayRef.swift */,
 				85E1CEEE89708ED0E4455BCD /* SimklDiscover.swift */,
 				C0E6CAD08552A40849DB89CD /* AppProfile.swift */,
+				FEEE00000000000000000001 /* ModuleMetadata.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2063,6 +2082,7 @@
 				3E73471E59E7AEA5DEF84E5E /* DiscordPresence.swift */,
 				5848EEB9B54A1ACE63BD4C96 /* CastManager+GoogleCast.swift */,
 				CA67D9CB84951B247A472ABF /* WebAuthenticationAnchors.swift */,
+				FEEE00000000000000000005 /* ModuleMetadataService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2243,6 +2263,8 @@
 				AE3495C8FF869FA796FE181B /* AdvancedNetworkSettingsView.swift */,
 				F46AC89852F57EBEBDEFC977 /* GeneralSettingsView.swift */,
 				FE1AC518A4DC04950FDBEA96 /* DiscordSettingsView.swift */,
+				FEEE00000000000000000009 /* MetadataDetailView.swift */,
+				FEEE0000000000000000000D /* MetadataCatalogView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2492,6 +2514,7 @@
 				0A30FC88F37974F65C8D08EC /* AdvancedNetworkTests.swift */,
 				CC394382AD78405AC31B9814 /* ManaExtensionTests.swift */,
 				D6552C97EFF65DCD9E62EBC1 /* NWListenerReady.swift */,
+				FEEE00000000000000000011 /* MetadataModuleTests.swift */,
 			);
 			path = ShiroxTests;
 			sourceTree = SOURCE_ROOT;
@@ -3014,6 +3037,7 @@
 				35DE9D632316EFAC32E8DAA0 /* AdvancedNetworkTests.swift in Sources */,
 				4DC87C1BED621B8E56B9B73B /* ManaExtensionTests.swift in Sources */,
 				A7395CC47E1D1989BB80DD2A /* NWListenerReady.swift in Sources */,
+				FEEE00000000000000000012 /* MetadataModuleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3347,6 +3371,10 @@
 				BC6A40E470ABC6B9E992CCD7 /* SubtitleFontPicker.swift in Sources */,
 				C3D17D85ECC84C0C2388E812 /* CastManager+GoogleCast.swift in Sources */,
 				2B2FF6673197178CD0EAFC09 /* WebAuthenticationAnchors.swift in Sources */,
+				FEEE00000000000000000004 /* ModuleMetadata.swift in Sources */,
+				FEEE00000000000000000008 /* ModuleMetadataService.swift in Sources */,
+				FEEE0000000000000000000C /* MetadataDetailView.swift in Sources */,
+				FEEE00000000000000000010 /* MetadataCatalogView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3682,6 +3710,10 @@
 				43B90D3ECA7769138F4ECA90 /* SubtitleFontPicker.swift in Sources */,
 				6230B799A02D818B3BDD77BA /* CastManager+GoogleCast.swift in Sources */,
 				D0DB2E6F057BA3C15BAD5EB1 /* WebAuthenticationAnchors.swift in Sources */,
+				FEEE00000000000000000003 /* ModuleMetadata.swift in Sources */,
+				FEEE00000000000000000007 /* ModuleMetadataService.swift in Sources */,
+				FEEE0000000000000000000B /* MetadataDetailView.swift in Sources */,
+				FEEE0000000000000000000F /* MetadataCatalogView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4018,6 +4050,10 @@
 				35FE90486B4D0AE97FC8C789 /* SubtitleFontPicker.swift in Sources */,
 				7F54615FD4109698AA5432F0 /* CastManager+GoogleCast.swift in Sources */,
 				78CC5BF862660530517AC345 /* WebAuthenticationAnchors.swift in Sources */,
+				FEEE00000000000000000002 /* ModuleMetadata.swift in Sources */,
+				FEEE00000000000000000006 /* ModuleMetadataService.swift in Sources */,
+				FEEE0000000000000000000A /* MetadataDetailView.swift in Sources */,
+				FEEE0000000000000000000E /* MetadataCatalogView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

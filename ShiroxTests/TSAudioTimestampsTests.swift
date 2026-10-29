@@ -82,7 +82,11 @@ final class TSAudioTimestampsTests: XCTestCase {
     }
 
     func testAnEvenSegmentIsLeftAlone() {
-        let stamps = (0..<6).map { 90_000 + Int64($0 * 2 * 1024) * 90_000 / 44_100 }
+        let stamps: [Int64] = (0..<6).map { index -> Int64 in
+            let samples = Int64(index * 2 * 1024)
+            let ticks = samples * 90_000 / 44_100
+            return 90_000 + ticks
+        }
         XCTAssertNil(TSAudioTimestamps.repair(segment(pts: stamps)))
     }
 

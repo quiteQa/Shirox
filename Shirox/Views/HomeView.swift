@@ -66,7 +66,7 @@ struct HomeView: View {
 
     /// Which Home is showing — the chain's, or Simkl's for one kind. A change reloads.
     private var homeSourceID: String {
-        discovery.usesSimkl ? "simkl-\(discovery.simklKind.rawValue)" : "providers"
+        discovery.sourceID
     }
 
     /// The hero's titles, from whichever source Home is showing.
@@ -87,6 +87,7 @@ struct HomeView: View {
     /// provider menu lists them, then Simkl's Anime, Shows and Movies as its kind menu does. Nil
     /// until there's a page.
     private var pagePosition: Int? {
+        if discovery.usesMetadata { return ProviderType.userProviders.count + MediaKind.simklKinds.count }
         if discovery.usesSimkl {
             guard let kind = simkl.layout?.kind, let index = MediaKind.simklKinds.firstIndex(of: kind) else { return nil }
             return ProviderType.userProviders.count + index
@@ -137,7 +138,18 @@ struct HomeView: View {
             // Like the hero: the leaving and arriving rows overlap while they turn.
             ZStack(alignment: .topLeading) {
                 VStack(alignment: .leading, spacing: 24) {
-                    if discovery.usesSimkl {
+                    if discovery.usesMetadata {
+                        if !vm.topRated.isEmpty {
+                            AnimeSection(title: ModuleMetadataCatalog.topRated.title, items: vm.topRated) {
+                                MetadataCatalogView(catalog: .topRated)
+                            }
+                        }
+                        if !vm.seasonal.isEmpty {
+                            AnimeSection(title: ModuleMetadataCatalog.newest.title, items: vm.seasonal) {
+                                MetadataCatalogView(catalog: .newest)
+                            }
+                        }
+                    } else if discovery.usesSimkl {
                         ForEach(simkl.layout?.rows ?? []) { row in
                             AnimeSection(title: row.title, items: row.items) {
                                 SimklListView(list: row.list)

@@ -7,8 +7,8 @@ import SwiftUI
 /// module, else nil.
 enum AnimeModulePreference {
     static func pick(active: ModuleDefinition?, modules: [ModuleDefinition]) -> ModuleDefinition? {
-        if let active, active.isManga == false { return active }
-        return modules.first { $0.isManga == false }
+        if let active, active.isAnimePlayback { return active }
+        return modules.first { $0.isAnimePlayback }
     }
 }
 
@@ -150,7 +150,7 @@ final class ModuleManager: ObservableObject {
             checkResults.removeValue(forKey: module.id)
 
             // Auto-select if it's the first module
-            if activeModule == nil {
+            if activeModule == nil || module.isMetadata {
                 selectModule(module)
             }
         } catch {
@@ -185,7 +185,7 @@ final class ModuleManager: ObservableObject {
         lastAddedModuleID = module.id
         checkResults.removeValue(forKey: module.id)
         persistCheckResults()
-        if activeModule == nil { selectModule(module) }
+        if activeModule == nil || module.isMetadata { selectModule(module) }
     }
 
     /// Puts back a module a backup carried whole: one from files, or one with an edited script.
@@ -298,6 +298,11 @@ final class ModuleManager: ObservableObject {
     // MARK: - Select Module
 
     func selectModule(_ module: ModuleDefinition) {
+        if module.isMetadata {
+            if activeModule?.id == module.id { deselectModule() }
+            DiscoverySource.shared.chooseMetadataModule(module)
+            return
+        }
         activeModule = module
         UserDefaults.standard.set(module.id, forKey: activeKey)
         
@@ -315,6 +320,7 @@ final class ModuleManager: ObservableObject {
     /// Returns false when the script failed to load. Used by flows that must
     /// call into the module immediately after switching (Continue Reading).
     func selectAndAwaitReady(_ module: ModuleDefinition) async -> Bool {
+        guard !module.isMetadata else { return false }
         activeModule = module
         UserDefaults.standard.set(module.id, forKey: activeKey)
         do {
@@ -424,10 +430,14 @@ final class ModuleManager: ObservableObject {
 
             let wasActive = activeModule?.id == modules[i].id
             modules[i] = fresh
+            if fresh.isMetadata { checkResults.removeValue(forKey: fresh.id) }
             if wasActive { selectModule(fresh) }
             didUpdate = true
         }
-        if didUpdate { saveToStorage() }
+        if didUpdate {
+            saveToStorage()
+            persistCheckResults()
+        }
     }
 
     // MARK: - Asset Caching

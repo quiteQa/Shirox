@@ -760,7 +760,9 @@ struct LibraryView: View {
 
     @ViewBuilder
     private func rowDestinationPage(_ entry: LibraryEntry) -> some View {
-        if let source = entry.localSource, source.kind == .module {
+        if entry.media.moduleMetadata != nil {
+            MediaDestination(media: entry.media)
+        } else if let source = entry.localSource, source.kind == .module {
             DetailView(
                 item: SearchItem(
                     title: entry.media.title.displayTitle,
