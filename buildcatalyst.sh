@@ -38,6 +38,10 @@ if [ ! -d "$DD_APP_PATH" ]; then
     exit 1
 fi
 
+echo "--- Signing (ad hoc) ---"
+codesign --force --deep --sign - "$DD_APP_PATH"
+codesign --verify --deep --strict "$DD_APP_PATH"
+
 echo "--- Packaging DMG ---"
 
 DMG_FINAL="$WORKING_LOCATION/build/${APPLICATION_NAME}-Catalyst.dmg"

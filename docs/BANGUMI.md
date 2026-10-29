@@ -1,5 +1,9 @@
 # Built-in Bangumi metadata
 
+## Release packages
+
+Use the [1.0.7 (126) release](https://github.com/quiteQa/Shirox/releases/tag/v1.0.7-bangumi.1) for optimized Release builds with Bangumi bundled. The [README](../README.md) links the iOS/tvOS IPA files, both Mac DMGs and this fork's side-loading feed. The development artifacts below are retained as validation history.
+
 Bangumi ships inside this fork as an animation metadata source, alongside AniList and MyAnimeList. Install a build of this fork, then select **Bangumi** in Settings → Modules or the Home source menu. No module URL, script download or Bangumi account is required. Metadata and artwork still need network access to Bangumi.
 
 The bundled `Shirox/Resources/Bangumi.json` and `Bangumi.js` are copied into every app target, including iOS, macOS, tvOS and Catalyst. A separate JavaScript runner reads them directly from the app bundle. Updating the bundled source requires an app update; refreshing imported modules does not replace its code. A missing bundled resource produces an error instead of fetching a script remotely.

@@ -53,7 +53,9 @@ fi
 cp -r "$DD_APP_PATH" "$TARGET_APP"
 
 echo "--- Removing code signature ---"
-codesign --remove "$TARGET_APP"
+if codesign -dv "$TARGET_APP" >/dev/null 2>&1; then
+   codesign --remove-signature "$TARGET_APP"
+fi
 
 if [ -e "$TARGET_APP/_CodeSignature" ]; then
    rm -rf "$TARGET_APP/_CodeSignature"

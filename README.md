@@ -1,212 +1,87 @@
-> **内置 Bangumi 动画元数据**：此 Fork 将 Bangumi 随 App 打包，接入首页、搜索和动画详情。它与 AniList、MyAnimeList 一起出现在来源列表中，无需导入模块 URL 或下载脚本。
->
-> [构建、安装与验证记录](docs/BANGUMI.md) · [Bangumi 模块仓库](https://github.com/quiteQa/shirox-bangumi)
->
-> 安装含内置资源的修改版后，在模块页或首页来源菜单直接选择 **Bangumi**。公开元数据无需登录；读取内容仍需连接 bgm.tv。下方保留的上游安装链接指向官方版本。
+# Shirox Bangumi
 
-<div align="center">
+基于 [xibrox/Shirox](https://github.com/xibrox/Shirox) 的动画资料库 App，内置 **Bangumi 动画元数据**。安装后，在模块页或首页来源菜单直接选择 **Bangumi**，无需导入模块 URL 或下载脚本。
 
-# 白 Shirox
+当前发行版：**1.0.7（126）** · [发行说明](RELEASE_NOTES.md) · [全部发行版](https://github.com/quiteQa/Shirox/releases) · [构建记录](https://github.com/quiteQa/Shirox/actions/workflows/nightly.yaml)
 
-**Your anime and manga library, entirely yours.**
+## 下载发行版
 
-A free, source-available library manager for iPhone, iPad and Mac. Track what you watch and read,
-keep it in sync with AniList and MyAnimeList, and play it from the sources *you* connect.
+以下文件使用 **Release** 配置构建，包含 Bangumi 配置与脚本。
 
-<p align="center">
-  <a href="https://github.com/xibrox/Shirox/releases"><img src="https://img.shields.io/badge/platform-iOS%2015%2B%20%7C%20iPadOS%20%7C%20macOS-black?style=flat-square&logo=apple&logoColor=white" alt="Platform" /></a>
-  <a href="https://github.com/xibrox/Shirox/releases"><img src="https://img.shields.io/badge/version-1.0.6-ef4444?style=flat-square" alt="Version" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-PolyForm%20NC%201.0.0-blue?style=flat-square" alt="License" /></a>
-  <a href="https://discord.com/invite/b9tZSuJj73"><img src="https://img.shields.io/badge/discord-join-5865F2?style=flat-square&logo=discord&logoColor=white" alt="Discord" /></a>
-</p>
+| 平台 | 安装包 | 系统要求 |
+| --- | --- | --- |
+| iPhone / iPad | [Shirox.ipa](https://github.com/quiteQa/Shirox/releases/download/v1.0.7-bangumi.1/Shirox.ipa) | iOS / iPadOS 15+ |
+| Mac 原生版 | [Shirox-macOS.dmg](https://github.com/quiteQa/Shirox/releases/download/v1.0.7-bangumi.1/Shirox-macOS.dmg) | macOS 14+ |
+| Mac Catalyst 版 | [Shirox-Catalyst.dmg](https://github.com/quiteQa/Shirox/releases/download/v1.0.7-bangumi.1/Shirox-Catalyst.dmg) | macOS 14+ |
+| Apple TV | [Shirox-tvos.ipa](https://github.com/quiteQa/Shirox/releases/download/v1.0.7-bangumi.1/Shirox-tvos.ipa) | tvOS 18.6+ |
 
-<p align="center">
-  <a href="#install">Install</a> · <a href="#features">Features</a> · <a href="#on-ipad-and-mac">iPad & Mac</a> · <a href="#modules">Modules</a> · <a href="#build-from-source">Build from source</a>
-</p>
+[最新发行页](https://github.com/quiteQa/Shirox/releases/latest) · [SHA-256 校验文件](https://github.com/quiteQa/Shirox/releases/download/v1.0.7-bangumi.1/SHA256SUMS.txt) · [iOS 调试符号](https://github.com/quiteQa/Shirox/releases/download/v1.0.7-bangumi.1/Shirox-iOS-dSYMs.zip)
 
-<br />
+**iOS / tvOS：** IPA 未签名，需要使用自己的签名方式侧载。**Mac：** 打开 DMG，将 App 拖入“应用程序”；两个 Mac 版本均使用临时签名，未经过 Apple 公证。首次打开若被拦截，可在系统设置的“隐私与安全性”中处理。
 
-<p align="center">
-  <img src="docs/screenshots/home.png" width="23%" alt="Home" />
-  <img src="docs/screenshots/library.png" width="23%" alt="Library" />
-  <img src="docs/screenshots/detail.png" width="23%" alt="Detail" />
-  <img src="docs/screenshots/player.png" width="23%" alt="Player" />
-</p>
+### 侧载源
 
-</div>
+[一键添加侧载源](https://altdirect.app/?url=https://raw.githubusercontent.com/quiteQa/Shirox/main/apps.json)，或在支持的侧载工具中添加：
 
----
+```text
+https://raw.githubusercontent.com/quiteQa/Shirox/main/apps.json
+```
 
-## What it is
+这是此 Fork 的 App 安装源，直接下载本仓库发行版。它与外部模块 JSON 的用途不同；内置 Bangumi 不需要再导入任何模块链接。
 
-Shirox ships with no content of its own. It's a native SwiftUI shell around three things you bring:
-your **tracker account** (AniList or MyAnimeList), your **sources** (modules, a Jellyfin
-server, or files on your device), and your **library**. Everything else — progress, downloads,
-playback, reading — happens on your device.
+## 使用 Bangumi
 
-> [!NOTE]
-> Shirox does not host, provide or endorse any content.
+1. 安装此仓库的发行版。
+2. 打开 **设置 → 模块**，或首页的来源菜单。
+3. 选择 **Bangumi · 内置动画元数据**。
 
----
+首页提供评分排行和最新首播；搜索、动画详情和剧集信息读取 Bangumi 数据。可查看中文与原文标题、别名、封面、简介、评分、首播日期、标签、制作公司和导演。公开数据无需 Bangumi 账号，条目和封面仍需联网。
 
-## Install
+旧 Bangumi 来源选择和收藏条目保持兼容，导入副本不会重复显示。脚本随 App 更新，刷新外部模块不会替换内置代码。
 
-<h3 align="center">
-  <a href="https://altdirect.app/?url=https://raw.githubusercontent.com/xibrox/Shirox/main/apps.json"><img src="https://altdirect.app/assets/png/AltSource_Blue.png" width="200" alt="Add the source" /></a>
-  &nbsp;
-  <a href="https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa"><img src="https://altdirect.app/assets/png/Download_Blue.png" width="200" alt="Download the IPA" /></a>
-</h3>
+Bangumi 提供元数据。播放时，在详情页选择另行安装的播放模块并确认对应条目。元数据来源不会进入播放和下载源列表，也不会进行串流检查。本版本没有 Bangumi 账号登录或自动追番同步。
 
-- **iPhone and iPad**: tap **Add the source** to open it in AltStore, SideStore, Feather, LiveContainer
-  or another sideloading app, which then installs Shirox and keeps it updated. Or download the IPA
-  and sideload it yourself. The source URL is
-  `https://raw.githubusercontent.com/xibrox/Shirox/main/apps.json`.
-- **Mac**: download `Shirox-macOS.dmg` from the [latest release](https://github.com/xibrox/Shirox/releases/latest).
+## 原有能力
 
----
+- AniList / MyAnimeList 资料库与追踪、本机资料库和收藏。
+- JavaScript 播放及漫画模块、Jellyfin、本地视频文件。
+- 视频播放、字幕、画中画、AirPlay 与 Chromecast。
+- 动画和漫画下载、离线播放与阅读。
+- iPhone、iPad、Mac 和 Apple TV 的原生界面，支持简体中文等 13 种语言。
 
-## Features
+各服务仍有自己的账号与功能要求。更详细的元数据协议与迁移说明见 [docs/BANGUMI.md](docs/BANGUMI.md)；独立脚本维护在 [quiteQa/shirox-bangumi](https://github.com/quiteQa/shirox-bangumi)。
 
-### Tracking
-- AniList and MyAnimeList side by side, with per-provider toggles for what gets written where
-- Anime and manga in one library, with season-aware progress across multi-season and continuous releases
-- Continue Watching and Continue Reading pick up mid-episode and mid-chapter
-- Writes queue on disk when you're offline or rate-limited, and flush on the next launch
-- Social: profiles, activity feeds, likes, replies, follows and notifications
+## 从源码构建
 
-### Sources
-- Modules — JavaScript content providers you install from a URL
-- Jellyfin: connect your own server and browse it as a native library
-- Local files: play media stored on your device, organized into your own collections
-
-### Player
-- Picture-in-Picture, AirPlay and Chromecast
-- Subtitles with adjustable size, color, shadow, position and timing offset
-- Source, quality, audio track and playback speed from menus in the player bar
-- Skip intro and outro where timestamps exist, plus auto-advance into the next episode or sequel
-- The next episode's stream is resolved before you need it
-
-### Offline
-- HLS episode downloads on a background session, so they keep running once you leave the app
-- Manga chapter downloads, single or batched by range
-- Downloaded titles browse, play and read with no network at all
-
-### On every screen
-- Native SwiftUI throughout, in light and dark
-- Home Screen quick actions straight into Search, Downloads or Library
-- Adult titles filtered out of module search results by default
-- Image and library caches you can inspect and clear from Settings
-
----
-
-## On iPad and Mac
-
-The same app, not a stretched phone layout: a top bar and a Mac sidebar in place of the tab bar,
-wider grids, and full-screen playback.
-
-<br />
-
-<div align="center">
-  <img src="docs/screenshots/ipad-home.png" width="32%" alt="Home on iPad" />
-  <img src="docs/screenshots/ipad-library.png" width="32%" alt="Library on iPad" />
-  <img src="docs/screenshots/ipad-player.png" width="32%" alt="Player on iPad" />
-</div>
-
----
-
-## Modules
-
-This modified source also supports **metadata modules** (`type: "metadata"`) for
-Home, Search and title details, separately from playback modules. See
-[Bangumi setup and the metadata contract](docs/BANGUMI.md). A metadata health check
-validates metadata without requiring a video stream.
-
-Modules are small JSON manifests pointing at a JavaScript file that knows how to search a site and
-resolve streams or chapters. Add one under **Settings → Modules** by pasting its manifest URL.
-
-Two first-party modules cover the sources that aren't websites:
-
-| Module | Manifest |
-| :--- | :--- |
-| **Local files** | `https://raw.githubusercontent.com/xibrox/local-files-module/refs/heads/main/local.json` |
-| **Jellyfin** | `https://raw.githubusercontent.com/xibrox/jellyfin-module/refs/heads/main/jellyfin.json` |
-
----
-
-## Build from source
-
-Requires macOS with Xcode 16 or newer. There is no CocoaPods step — dependencies are Swift
-Packages and Xcode resolves them on first open.
+需要 macOS、Xcode 26 和命令行工具。依赖由 Swift Package Manager 解析；生成 Mac DMG 需要 `create-dmg`，脚本会通过 Homebrew 安装。
 
 ```bash
-git clone https://github.com/xibrox/Shirox.git
+git clone https://github.com/quiteQa/Shirox.git
 cd Shirox
 open Shirox.xcodeproj
 ```
 
-Pick a scheme and run:
-
-| Scheme | Target | Notes |
-| :--- | :--- | :--- |
-| `Shirox_iOS` | iPhone and iPad | iOS 15+ |
-| `Shirox_MacCatalyst` | Mac | macOS 14+ |
-| `Shirox_macOS` | Mac | native macOS 14+ |
-| `Shirox_tvOS` | Apple TV | tvOS, in progress |
-
-Or use the release scripts directly:
+发行构建脚本：
 
 ```bash
-./buildipa.sh       # IPA
-./buildcatalyst.sh  # Catalyst DMG
-./builddmg.sh       # native macOS DMG
+bash buildipa.sh       # build/Shirox.ipa
+bash builddmg.sh       # build/Shirox-macOS.dmg
+bash buildcatalyst.sh  # build/Shirox-Catalyst.dmg
+bash buildtvos.sh      # build/Shirox-tvos.ipa
 ```
 
-### Dependencies
+需要自己的签名设置时，从 `Configurations/Shirox.local.xcconfig.template` 创建本地配置。四个 scheme 为 `Shirox_iOS`、`Shirox_macOS`、`Shirox_MacCatalyst` 和 `Shirox_tvOS`。
 
-| Dependency | Purpose |
-| :--- | :--- |
-| [Kingfisher](https://github.com/onevcat/Kingfisher) | Image caching |
-| [google-cast-spm](https://github.com/castlabs/google-cast-spm) | Chromecast |
-| [FakeWebKit](https://github.com/undeaDD/FakeWebKit) | Sources behind Cloudflare |
+### 自动发行
 
----
+[Release Shirox Bangumi](https://github.com/quiteQa/Shirox/actions/workflows/nightly.yaml) 工作流支持手动运行。准备新版本时，更新 `Configurations/Release.json`、工程中的版本与构建号、`apps.json` 及 `RELEASE_NOTES.md`，再推送到 `main`。
 
-## Contributing
+CI 检查版本、本地化和图标，使用 Release 配置构建四个平台，从生成的 IPA / DMG 中检查版本、更新地址和内置 Bangumi 资源，并验证 Mac 签名。全部通过后发布 GitHub Release、校验文件与 iOS 调试符号，并将实际 IPA 大小写回侧载源。
 
-Issues and pull requests are welcome — bugs, features, modules, docs. Branch off `main`, keep
-[SwiftLint](.swiftlint.yml) happy, and open a PR describing what changed and how you tested it.
+原生 XCTest 尚未执行，尚未真机验证。此前内置版的脚本测试与原生编译记录见 [验证说明](docs/BANGUMI.md)。
 
-Run `scripts/install-hooks.sh` once after cloning. It turns on the hooks in `.githooks`: commit
-messages may not contain em dashes, emoji, hidden Unicode characters or Co-Authored-By trailers,
-and [Semgrep](https://semgrep.dev) (`brew install semgrep`) scans staged files for new findings.
-CI runs the same checks on every PR.
+## 来源与许可证
 
----
+原项目由 [xibrox](https://github.com/xibrox) 开发，本分支由 [quiteQa](https://github.com/quiteQa) 维护 Bangumi 集成与发行。上游：[xibrox/Shirox](https://github.com/xibrox/Shirox) · [上游社区](https://discord.com/invite/b9tZSuJj73) · [支持原作者](https://ko-fi.com/xibrox)。
 
-## Community and support
-
-Join the [Discord](https://discord.com/invite/b9tZSuJj73) for help and build
-announcements. If Shirox is useful to you, you can support it on [Ko-fi](https://ko-fi.com/xibrox).
-
-<br />
-
-<p align="center">
-  <a href="https://discord.com/invite/b9tZSuJj73"><img src="https://img.shields.io/badge/Discord-Join%20Server-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord" /></a>
-  &nbsp;&nbsp;
-  <a href="https://ko-fi.com/xibrox"><img src="https://img.shields.io/badge/Ko--fi-Support%20Author-FF5E5B?style=for-the-badge&logo=kofi&logoColor=white" alt="Ko-fi" /></a>
-</p>
-
----
-
-## License
-
-[PolyForm Noncommercial License 1.0.0](LICENSE). Free to use, modify and share for any purpose
-other than commercial use.
-
----
-
-<div align="center">
-
-Built by [xibrox](https://github.com/xibrox)
-
-</div>
+遵循 [PolyForm Noncommercial License 1.0.0](LICENSE)，允许非商业用途的使用、修改和分享。动画元数据来自 [Bangumi](https://bgm.tv)；App 不托管视频内容。

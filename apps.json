@@ -1,21 +1,21 @@
 {
-  "name": "Shirox",
-  "identifier": "com.shirox.altstore",
-  "sourceURL": "https://raw.githubusercontent.com/xibrox/Shirox/main/apps.json",
-  "subtitle": "Personal anime library manager for iOS",
-  "description": "Shirox is a free, source-available personal anime library manager for iOS 15+.\n\nOrganize and track your anime collection using community-built modules. AniList integration for library management and discovery.",
-  "website": "https://github.com/xibrox/Shirox",
+  "name": "Shirox Bangumi",
+  "identifier": "com.quiteqa.shirox.bangumi.source",
+  "sourceURL": "https://raw.githubusercontent.com/quiteQa/Shirox/main/apps.json",
+  "subtitle": "内置 Bangumi 动画元数据",
+  "description": "Shirox Bangumi 是基于 xibrox/Shirox 的分支，内置 Bangumi 动画元数据，支持首页、搜索、详情和剧集信息。安装后直接选择 Bangumi，无需导入脚本。",
+  "website": "https://github.com/quiteQa/Shirox",
   "featuredApps": [
     "com.shirox.app"
   ],
   "apps": [
     {
-      "name": "Shirox",
+      "name": "Shirox Bangumi",
       "bundleIdentifier": "com.shirox.app",
-      "developerName": "xibrox",
-      "subtitle": "Personal anime library manager for iOS",
-      "localizedDescription": "Shirox is a free, source-available personal anime library manager for iOS 15+.\n\n• Organize your anime collection with community-built modules\n• AniList integration for library management and discovery\n• Continue Watching: pick up right where you left off\n• Picture-in-Picture and AirPlay support\n• Subtitle support",
-      "iconURL": "https://raw.githubusercontent.com/xibrox/Shirox/main/Shirox/shirox-icon.icon/Assets/白-shiro.png",
+      "developerName": "xibrox / quiteQa",
+      "subtitle": "内置 Bangumi 动画元数据",
+      "localizedDescription": "Shirox Bangumi 是基于 xibrox/Shirox 的分支，内置 Bangumi 动画元数据，支持首页、搜索、详情和剧集信息。安装后直接选择 Bangumi，无需导入脚本。",
+      "iconURL": "https://raw.githubusercontent.com/quiteQa/Shirox/main/Shirox/shirox-icon.icon/Assets/白-shiro.png",
       "tintColor": "ef4444",
       "category": "entertainment",
       "screenshots": [],
@@ -27,296 +27,16 @@
       },
       "versions": [
         {
-          "version": "1.0.6",
-          "buildVersion": "125",
-          "date": "2026-10-27",
-          "localizedDescription": "Settings has a new General page: light, dark or system appearance, an accent color (Monochrome, Blue, Purple, Pink, Orange, Green or Brown) for buttons, switches and highlights, a new app icon (Realistic), and the tab to open on. Customize Tabs reorders or hides tabs on iPhone, iPad and Mac (Settings always stays); on iPhone the labels can be hidden and, on iOS 26, the tab bar shrinks while you scroll. Pull to refresh can be Gooey, Glass or None. Cinematic layout, Hide Titles on Cards and the new Home & Search Buttons option (Icon & Name, Icon Only or Hidden) are on this page too, and every new setting is kept in backups.\n\nThe main Settings page has section titles and icons on the legal rows, and tapping Platform or Version copies it for bug reports. The profile row has glass on its avatar and says Manage Profiles once a profile is renamed or has a photo. In Providers, the provider icons are rounded and the Primary pill stays on one line. Advanced Network's explanations are shorter and sit under their switches.\n\nShirox speaks 13 languages: English, German, Spanish, Brazilian Portuguese, French, Italian, Indonesian, Turkish, Vietnamese, Polish, Russian, Simplified Chinese and Japanese. Pick one in Settings › General › Change Language, or request another there. A change applies the next time Shirox opens. The translations are machine-made, so corrections from native speakers are welcome.\n\nIcon packs: swap the app's icons for Font Awesome, Iconoir or any pack published by link, in Settings › General › Icon Packs. Packs update from the same link.\n\nDiscord: show what you watch and read as your Discord status, with the title, the episode or chapter and the cover. Sign in with Discord in Settings › Providers › Discord; no token to paste, nothing to install. A test button shows a sample status. Not available on Apple TV.\n\nSubtitles: pick any font on your device for text subtitles, in Settings › Subtitles and the player's subtitle sheet. A preview shows your settings over a test image, the shadow is actually visible now, and the background has its own section with color, opacity and rounding. Size is one Font Size slider instead of a slider and a picker for the same value; Apple TV keeps the size presets.\n\nMac: the search field sits in the toolbar on Search and Library; ⌘F opens it, and Library filters as you type. The bars fade softly over scrolling content on Mac and iPad.\n\nAlso: the Contributors page lists developers, contributors and inspirations, and its links open; the bookmark button sits over the search tab on detail pages, with glass on the cover; the adult content blocklist uses about a tenth of the memory and loads faster at launch; and the app download is about 2 MB smaller.\n\nFixes: the Mac player's New Window works in every language, Jellyfin movies keep their label in German, and Unlink current series has an icon.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 27270775,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.6",
-          "buildVersion": "123",
-          "date": "2026-10-23",
-          "localizedDescription": "Reader: tap the left or right side of a page to move on or back: in vertical scroll it scrolls part of a screen, in the paged modes it turns the page (right to left reading swaps the sides). The middle shows and hides the controls, and a quick double tap zooms anywhere. Single taps answer in a fraction of the time they took. Reverse Direction, for vertical scroll, runs the page slider and chapter buttons right to left and swaps the tap sides with them. Both are in the reader's book menu and Settings → Reader. Pages that fail to load now try again by themselves a few times before showing an error. The reader's buttons lost the second, lighter ring around them on iOS 27.\n\nPlayer: a tap shows the controls sooner, and a double tap seeks without showing or hiding them. The title sits between the buttons, cut short with an ellipsis; tap it to read it whole. A new info button opens Video Details: the video's and audio's codec, resolution, frame rate, bitrate and channels, the subtitle on screen, and the stream's own bitrate. It scrolls when there's no room for all of it.\n\nStremio addons: streams are no longer fetched before you pick one. With a debrid service (AIOStreams or Torrentio with TorBox, for example) that fetch added every listed torrent to your account. Each stream also shows the addon's full details under its name, as Stremio and Nuvio do: quality, codec, audio and languages, dub, size.\n\nManga: Mana source repos can be added in Modules, for searching and reading manga from sources such as MangaDex, AsuraScans and MangaFire. As with other extensions, adult sources and titles are left out.\n\nAlso: Seanime providers that send binary data (Miruro) work, and a CloudStream repo now says it isn't supported instead of showing an empty list. The profile in use can be deleted (Shirox switches to another first); the profile picker sits in the middle of the screen on iPad and Mac and is back to several profiles a row on iPhone. Movies and specials found from search keep their own cover instead of the show's.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 25654898,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.6",
-          "buildVersion": "122",
-          "date": "2026-10-23",
-          "localizedDescription": "Extensions: besides Sora modules and Seanime providers, Modules now takes Stremio addons and Nuvio, Vega and SkyStream repos. Paste an addon's link to add it, or a repo's link to pick its providers from a list, one at a time or all at once. Each works like any module: search, the anime page, the player, downloads, Continue Watching and backups, on iPhone, iPad, Mac and Apple TV, and updates from its repo. Stremio addons find shows through the addon itself, Kitsu or Cinemeta; Nuvio scrapers through TMDB. From an anime page the right show and the right part of a split season come first.\n\nSafe for work only: adult addons and providers are never listed or installed, and are removed if their source later marks them adult; adult titles are left out of results. Torrent links are never played.\n\nStreams: links that are dead, web pages or ZIP files are left out before you pick, so the list only has ones that play. When a provider's site is behind Cloudflare (AnimePahe from Nuvio, for one), its row says so and offers Verify Cloudflare, including on MyAnimeList pages.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 25558965,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.6",
-          "buildVersion": "121",
-          "date": "2026-10-15",
-          "localizedDescription": "Profiles: several people can share the app on one device, each with their own library, watch progress, settings and sign-ins, and none needs an account. Pick who's watching from the \"Who's going on an adventure?\" screen at launch or in Settings, and switching happens right away. A profile's picture is one you choose, or its AniList, MyAnimeList or Simkl picture. A new profile can have its own modules, a copy of another's, or share another's.\n\nModules: import one from files (the .js, plus its .json if you have it) or write it in the editor, fill in its name, icon, author and the rest, and edit any module's script in the app with syntax colours. Share as Files sends a module's .json and .js.\n\nPlayer: a mute button next to the lock. Spatial Audio is now a setting, off by default, so AirPods no longer stay stuck in it. Leaving the app pauses the video unless it's in Picture in Picture, on AirPlay, cast, or Play in Background is on. Your audio language is kept more reliably between episodes.\n\nDownloads: AnimePahe downloads play with sound on the Native player, including ones you already have. Episodes downloaded without their audio (AniZone and similar, downloaded before October 3) get it back automatically. Downloads fetch several pieces at once and slow down only for sites that ask.\n\nFixes: the Simkl list's Anime, Shows and Movies tabs show their own titles. Progress bars are hidden at 0 and on Completed and Planning, and no longer look full when they aren't. Films no longer ask to be linked to AniList. Settings has Providers next to the other sections. On iPad, Share Backup opens the full share sheet. On a Mac: the row arrows page back properly, no artwork shows beside the rows, edit sheets no longer slide off the right, and clicking the current tab goes back to its first page.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 25236160,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.6",
-          "buildVersion": "120",
-          "date": "2026-10-10",
-          "localizedDescription": "Downloads are real video files now. Each episode is saved as one MP4 (or MKV) in a folder per show, named like \"Frieren - E02 - The Journey's End.mp4\", with its subtitles and the show's poster beside it. Every audio language is kept. Downloaded episodes have Share Video and Show in Files (Show in Finder on a Mac). Older downloads are converted once in the background after you update. Queued downloads no longer fail as \"Interrupted\" right after launch, so Auto-Resume works again.\n\nOn an iPad or a Mac, Home and show pages sit over the show's artwork, with the title, a Play button, genres and the synopsis at the bottom and the rows scrolling up over it. Episodes are a sideways row of large thumbnails that opens on the one up next. The old layouts are in Settings > Library > Layout.\n\nThe Library shows a \"+N\" badge for aired episodes you haven't watched and a red dot when new ones came out since you last opened a show, with New Episodes First in the sort menu. The edit sheet now has rewatches, start and finish dates and AniList custom lists. Settings has a Subtitles page and Hide Titles on Cards. On iOS, Picture in Picture lets you use the app and brings the player back when you return.\n\nMac: tabs in the toolbar instead of the sidebar, proper player menus with checkmarks, readable controls over bright video, and Picture in Picture as a floating panel that stays on every desktop and over full-screen apps. The manga reader has the iOS controls and paged modes, and you can right-click a page to save or copy it. Sheets like the Jellyfin setup no longer open empty, and toasts like \"Frame saved\" show over the player.\n\nFixes: pages served as WebP save to Photos again (error 3302). Typing in a module picker's search field on macOS 15 should work now. 1.25x speed no longer reads 1.2x. The lock icon fades with the controls.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 24922148,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.6",
-          "buildVersion": "119",
-          "date": "2026-10-08",
-          "localizedDescription": "Shirox has a native Mac app now, next to the iPad version that runs on a Mac (Shirox-macOS.dmg). It has a sidebar, keyboard shortcuts and a window that fits a Mac. It plays from title pages, Continue Watching, Jellyfin and video files you open or drop on the window, and the player and manga reader open inside the main window. It signs in to AniList and MyAnimeList, downloads episodes and manga, has its own manga reader, and has media keys, Now Playing, Backup & Restore, Save Frame (S), Picture in Picture (P) and AirPlay on Native. Streams go through the app's proxy as on iOS, so AnimePahe and Re:ANIME play on both engines.\n\nRe:ANIME HD-2 plays again on Native and MPV, and downloads. Its video comes disguised as image files, which Shirox now unwraps. The player keeps the audio track you picked for a show when an episode opens again (Native used to switch to your device's language). Hold space for 2x speed on a Mac, Mac Catalyst or an iPad keyboard, and a quick press still plays or pauses. Moving the mouse brings the pointer and the controls back.\n\nA waiting or paused download has Download Next in its hold menu, which moves it to the front of the queue and starts it right away. Long titles on cards keep their end, so seasons stay apart (\"That Time I Got … Slime Season 3\"), and holding a card shows the whole title with Copy Title.\n\nFixes: a fix for taps on the video not showing the controls on iOS 16. The Library keeps each title's updated time across launches instead of every title reading \"1 second ago\". The synopsis preview no longer leaves a gap from empty lines. On Mac Catalyst, Home's banner no longer runs under the sidebar. New builds now come out as a full GitHub release named after the version.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 24672665,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.6",
-          "buildVersion": "118",
-          "date": "2026-10-06",
-          "localizedDescription": "The player remembers the audio and subtitles you pick for a show and starts every episode on them, Up Next included, and downloads keep every audio language instead of only the default one. Downloaded episodes have Next, which plays the next episode from disk or streams it when it isn't downloaded. Finishing a Simkl movie, or the last episode of a show that has finished airing, asks for a rating as AniList does. MPV works with AirPlay: under Screen Mirroring its picture goes to the TV full screen, and picking a receiver from the AirPlay button carries on in the native engine from the same spot.\n\nModules are tested when you add one, and Manage Modules can check them all and offer to remove the ones that fail. Hold the tab bar for a menu with every tab, your modules and Settings, and the Upcoming calendar opens as a page. Simkl's Continue button resumes the saved stream, holding the watch button offers change stream, download, reset progress and mark watched, and a film or one-episode special has just the watch button. The Library grid lifts one card when held, has a pencil to edit and a progress bar on each poster. The delete button floats at the bottom while picking downloaded episodes, notifications have bigger pictures, and your profile opens as a page. Storage & Cache counts and clears every cache, the network cache included, and Reset Continue Watching is now Reset Watch Progress and says what it clears.\n\nFixes: the native player no longer crackles on Re:ANIME, MPV keeps more audio queued against pops at the start of a stream, and the screen no longer dims and locks mid-episode. A stream that dies mid-episode on a show's page fetches a new link and carries on at the same second instead of freezing or starting over at 0:00. Reset Progress works on a downloaded show's page and stays reset after AniList and MyAnimeList sync. Marking an episode watched no longer unmarks the ones before it on lists where numbers repeat. A later season's module page tracks that season instead of the first (Dr. STONE), and episodes past a cour's end go to the next cour. Cloudflare verification opens the page that is walled, so sites that only wall detail pages can be verified, and detail pages run the check and retry. Downloads cut off by closing the app show Retry instead of spinning at 0% forever. Imported subtitle files with a byte order mark or in Arabic, Cyrillic and other code pages load and replace the stream's track, with only one copy showing. Module pickers keep each row's height while searching, episode and chapter numbers fit their circle, episode titles get four lines, and on iOS 27 the Search tab has its own circle and the keyboard waits until you tap the field.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 24605647,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.6",
-          "buildVersion": "117",
-          "date": "2026-10-04",
-          "localizedDescription": "The player pauses while Control Center, Notification Center or the app switcher covers it and resumes when they close (Settings > Player, on by default), and an optional ambient mode fills the black bars with a glow of the video on Native. On a phone in portrait the bottom bar's buttons get their own row, so Skip Intro no longer covers them. AirPlay keeps working through reloads, quality changes and the next episode, and subtitles reach the Apple TV. Import Subtitle File works on any video, the sequel is offered after a season's last episode from Continue Watching and module pages too, and Skip Intro and Skip Credits fill in from the backup databases when Anira has only one.\n\nSettings > Downloads has Download Quality. Downloaded episodes have Next and the sequel after the last, every subtitle track is saved offline, and streams with separate audio no longer download silent. A downloaded manga's page has a delete button, and Storage & Cache no longer wipes Continue Watching and watch history with Clear Everything, shows sizes that update, and has a Downloads section.\n\nThe Library has a grid layout, MyAnimeList Home has Last Season · Complete, the synopsis opens a details sheet with Following and the trailer, notifications open as a full page, and AniList bio images and videos show even when several share a line. Re:ANIME streams play, download and resume. The vertical reader pans sideways when zoomed, and switching from paged keeps your page. On the Mac, Shirox no longer asks for your Documents folder, and the pointer hides with the player's controls while a video plays, in the Mac app and the iPhone app on an Apple silicon Mac (thanks to JMcrafter26).\n\nFixes: some modules (like HydraHD) could loop sending requests after finding a stream, heating the phone during playback; fixed, and finding the stream is faster. MPV goes back to hardware decoding after a bad start, skipping back after resuming from Continue Watching lands where it should instead of where you were, and a stream's subtitles no longer stack up after seeks. A stream that dies mid-episode picks up where you were instead of skipping ahead and marking the episode watched. A launch crash in module updates and some module engine crashes are fixed. The player lock blocks skips, an airing show's newest episode is no longer treated as its last, sequels sync the right episode from Continue Watching, airing MyAnimeList shows no longer read 0/0, downloaded episodes no longer share progress, pausing a download no longer fails it, Rewatching stays Rewatching in the on-device library, subtitles that need the stream's headers load while streaming, ambient mode no longer widens the player, a MyAnimeList-only account opens the Library signed in, an AniList entry marked private or given a note stays that way after reopening the app (manga too), and the Mac app no longer asks again and again for access to Apple Music and your media library.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 24339529,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.6",
-          "buildVersion": "116",
-          "date": "2026-10-02",
-          "localizedDescription": "Show pages link out. A Safari button in the top bar opens the title on its module's site and on AniList, MyAnimeList and Simkl, as a menu when there's more than one. AniList and module pages gain Edit on Simkl, Seanime results keep their real page link, and Continue Reading's menu has View Details for a manga's page.\n\nHold to save a frame. Settings > Player > Hold Action can save the current frame to a Shirox album in Photos instead of the 2× speed boost, on Native and MPV. A title's library editor has Automatically Track, to update its progress by hand instead, and Force Landscape has Auto-Rotate in Landscape, which turns the player to the other side even with Rotation Lock on (all three thanks to 0xGoldstar). Automatically Track now sticks on Simkl titles too, and Force Landscape turns between both landscape sides again. In the manga reader, long-press a page to save it to Photos at full resolution or share it.\n\nWith Simkl as the source, Upcoming shows Simkl's calendar with a menu for anime, shows or movies. Home slides between sources and between Simkl's Anime, Shows and Movies, its calendar button floats over the tab bar, and sheets grow out of the button that opened them.\n\nThe Downloads tab shows the storage used, has filter, search and sort, live progress on each row, and Pause All and Resume All. Downloaded manga open in the module they came from, so Continue Reading and reading progress stay with the right source, and they keep their AniList match and tracking offline. Downloaded episodes can be marked watched or unwatched like online ones, which updates AniList and MyAnimeList too.\n\nFixes: on iOS 27, swiping back while a page was still opening could leave every row and card in the app dead until a relaunch. Shirox now uses the real navigation stack on iOS 16 and later. Tapping a relation card no longer opens its neighbour, posters behind Cloudflare no longer pop up the challenge window at launch, downloads send the stream's request headers, a stalled stream on Native restarts on its own, the manga reader no longer tries to open a deleted chapter, the module button in Search no longer runs off screen with a long module name, and the title at the top of detail pages stays clear of the buttons beside it.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 24112908,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.6",
-          "buildVersion": "115",
-          "date": "2026-10-02",
-          "localizedDescription": "A second playback engine. Settings > Player > Player Engine now offers MPV next to Native. MPV plays more formats, MKV included, and draws styled subtitles itself, and Native falls back to it on its own when AVPlayer can't open a file or gives up on it. Picture in Picture works on MPV too. It draws on the CPU while PiP is open, so it costs more battery than Native's, and AirPlay video still needs Native. MPV streams through the app's proxy since some CDNs refuse its HTTP/1.1, follows a rotation without dropping audio or buffering, and lets a slow server finish opening instead of offering Retry.\n\nASS and SSA subtitles work: libass draws them over the picture on Native, mpv draws them itself on MPV, and signs stay where the script put them. On MPV the subtitle tracks inside the file are listed under In This Video. Subtitle delay is no longer capped at 5 seconds, with bigger steps in the menu and an exact value in the sheet.\n\nThe phone runs cooler while you watch. The player no longer redraws everything twice a second, Now Playing is only updated when something changes, ASS subtitles render at up to 30fps, and MPV uses lighter scaling and buffers 2 minutes ahead. The quality menu no longer downloads a direct MP4 or MKV episode a second time, which also got pixeldrain streams refused. Home scrolls on about half the CPU, and modules and the ID mapping cache moved out of the settings file iOS rewrites on every change.\n\nFixes: coming back from PiP or background audio no longer cuts the sound for a second, the manga reader's page curl no longer puts the old page back mid-turn or leaves you with no page past either end, right to left swipes turn the right way, and zstd-compressed responses are decoded for fetchv2, module scripts, subtitles and quality lists.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 23857987,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.6",
-          "buildVersion": "114",
-          "date": "2026-09-27",
-          "localizedDescription": "Simkl comes to Shirox. Sign in with Simkl in Settings and keep it in step with AniList and MyAnimeList: pick which services your edits are mirrored to, or run a one-off Overwrite or Mirror sync. Simkl brings shows and movies, not just anime. The Library has a Simkl list with Anime, Shows and Movies, search adds more, and show and movie pages share the anime page's layout, with a tick for each episode or watched up to by season. Shows and movies play through your modules with the module picker, and what you finish is marked on Simkl and lands in Continue Watching.\n\nSimkl can also be the source for Home and Search: Trending, Top Rated, New Premieres, Airing Today and Coming Soon, the most watched by type, period and genre, and one search across anime, shows and movies. Episodes are tracked on Simkl as you finish them, rewatches are counted properly, and anime that AniList and MyAnimeList don't have now shows up and opens on its Simkl page. Simkl allows 500 requests a day; Shirox counts them, keeps the last 100 for what you do yourself, and shows today's count in Settings.\n\nTracking Links let you tie any show to its AniList, MyAnimeList or Simkl entry by typing an ID or pasting a link, and pick which season a module page is. Progress follows those links, they're included in backups along with AniList matches, and progress can now be typed as well as stepped.\n\nSeanime manga and streaming providers install as modules from their manifest.json link, with Sub or Dub per provider and a badge in Modules. Providers that send no posters get the poster, banner and synopsis from AniList, in search results too. Torrent providers aren't supported. Pasting the wrong link into Add Module now says what it is and which link to use instead, and adult modules can't be added; any already installed are removed.\n\nMany more titles show their logo, in a language you can read, including Simkl shows and movies. Pull to refresh drops a gooey bead from the Dynamic Island on every screen, the manga reader turns pages with Apple Books' page curl (right to left too), the Home carousel's parallax is back, subtitles are a quick menu like playback speed, and Settings is grouped into four folders.\n\nFixes: tracking no longer wipes your AniList or MyAnimeList score when it updates progress, a rewatching or completed show is no longer reset when its entry can't be read, there's no gap above the artwork when pulling down on a detail page, and the player's and reader's glass controls keep one look in light and dark mode. For module developers, fetchv2 can now impersonate Safari, Chrome or Firefox, or fetch through a WebView with the site's cookies (thanks to 50n50).",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 11130300,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.6",
-          "buildVersion": "113",
-          "date": "2026-09-27",
-          "localizedDescription": "Setup, browsing and a schedule. A first-run walkthrough explains what Shirox is and wires up your first source and tracker, behind a new launch animation. The Search tab is no longer blank until you type - it opens on a browsable grid with genre filters and sorting, with your recent searches above it instead of replacing it. A new Upcoming screen shows the week's airing schedule, with a filter for just the shows in your library.\n\nBackup & Restore, in Settings, writes your progress, library, settings and installed modules to a single file and reads it back on any device. Accounts are left out unless you turn on Include Accounts, and downloads and caches are never included, so an ordinary backup stays small and safe to hand to someone. A restore names the real counts it is about to replace before it replaces anything, and one unreadable section is skipped rather than taking the whole file down with it.\n\nCopy Library has grown into three kinds of run. Sync brings your AniList and MyAnimeList accounts into line - either direction, or both at once in a single pass - and only ever moves progress forward, so running it twice changes nothing. Replace overwrites one account with the other outright, and Mirror also deletes the titles the other doesn't have, ending up an exact copy. Neither can be undone, so both show you the whole plan first, every deletion named, and an entry whose match can't be confirmed is kept rather than deleted. Rewatches are now ordered by cycle, so episode 4 of a third rewatch counts as further along than episode 12 of a second, and AniList entries gained a private Notes field in the edit sheet.\n\nDownloads gained pause and resume, Retry All and Clear All on a failed batch, delete for a whole downloaded show or manga, an optional delete-after-watching, and a Delete All Downloads entry in Storage. Subtitles can be imported for downloaded episodes, batch downloads start in episode order, and a finished download no longer buffers as though it were still streaming. Data Saver loads smaller artwork, skips the large Home banners and shortens the discovery rows, taking a full Home scroll from roughly 18 MB to under 3.\n\nA large correctness pass. The next-episode button on a sequel wrote the wrong episode number to AniList and MyAnimeList. Returning from a phone call could skip an episode and wipe the progress on the one you were watching. A 2x speed hold fired on the subtitle sheet, double-tap seek ignored the screen lock, the manga reader jumped pages when scrolling back up, downloads showed the wrong source, the profile score chart drew empty, notifications reported none when they had simply failed, and an AniList bio with emoji inside a spoiler had the rest of its text mangled. MyAnimeList browsing now runs on MyAnimeList's own API, so it keeps working when the community mirror is down. And when AniList itself goes down, Shirox now switches over to MyAnimeList on its own instead of stopping at an error.\n\nSigning in is steadier. An unreachable AniList no longer reports itself as a broken sign-in - the first sync after a cold launch was exactly when that fired - and a token AniList has genuinely refused now says Sign in again in Settings, instead of a confident Signed in while every sync failed with a bare HTTP 400. Reinstalling no longer comes up signed into a ghost account left in the Keychain by the previous install, the Library toolbar no longer shows one account's list under the other's name and avatar, and signing in offers both trackers rather than whichever one happened to be selected. Home opens on the content it had last time instead of a blank spinner, and loads in one request on AniList instead of five. When a tracker is down the banner now actually appears, naming which service answered instead and why, in that service's own words. Artwork behind Cloudflare no longer keeps failing for an hour after one bad challenge, MyAnimeList's own API backs off and retries rather than failing on the first rate limit, and the compact title on detail screens waits until the large one has scrolled away.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 10056794,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.5",
-          "buildVersion": "110",
-          "date": "2026-08-30",
-          "localizedDescription": "Casting holds a whole movie now. Chromecast and AirPlay sessions no longer drop partway through, seeking on a cast works, encrypted and fMP4 streams play to the end, and header-authenticated streams no longer land on a black screen. Skipping an episode or switching quality goes to the TV instead of the handset, and the lock screen controls follow whatever is actually playing.\n\nStreams that used to quietly never load are now detected and offer a retry instead of stalling on a spinner or a black frame. The player no longer silently refuses to open after you pick a source, and it only forces landscape when Force Landscape is on. Tap the poster on any detail screen to open it full-size with pinch zoom, and long-press a title to copy it.\n\nPlus a wide bug audit: crashes in the Home carousel and the manga reader, manga chapters that finished downloading with pages missing, a reading position lost when the app is swiped away, episodes advancing twice after a quality switch, batch downloads and next-season lookups that could hang on some modules, silent failures when deleting or liking a post, pull-to-refresh on Browse, empty episode lists, subtitles using a tab before cue settings, AniList notifications that read just Activity instead of naming who liked or replied, forum notifications that showed no text at all and now name the thread and open it on AniList, and access tokens written into the exported log file.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 9460825,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.4",
-          "buildVersion": "109",
-          "date": "2026-08-29",
-          "localizedDescription": "Rebuild of 1.0.3 submitted for TestFlight review.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 9370894,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.3",
-          "buildVersion": "108",
-          "date": "2026-07-15",
-          "localizedDescription": "Stability improvements and bug fixes.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 9355756,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "1.0.2",
-          "buildVersion": "107",
-          "date": "2026-07-13",
-          "localizedDescription": "Long-press the Shirox icon on your Home Screen for instant shortcuts. Jump straight to Search, Downloads, or Library — the app opens right onto the tab you picked, whether it was already running or fully closed. The shortcut icons match the tab bar, so it's a fast way into whatever you use most.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 9295044,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "0.1.5",
-          "buildVersion": "104",
-          "date": "2026-07-09",
-          "localizedDescription": "Download manga chapters for offline reading — grab a single chapter with one tap, or flip on selection mode to download a whole range in one batch, right from the manga's detail screen. Every chapter row shows live download progress and a checkmark when it's done, and downloaded chapters read completely offline with pages loading straight from your device. The Downloads tab has a new Manga section grouped by source and title, so you can open a saved manga and read it fully offline. Also fixed: deleting a download now cleans up every file it leaves behind, removed downloads no longer redownload themselves after a relaunch, and downloaded episodes recover on their own after the app's been backgrounded.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 9289241,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "0.1.4",
-          "buildVersion": "103",
-          "date": "2026-07-08",
-          "localizedDescription": "The player's options are native menus now — long-press for playback speed, quality, audio track, and source. Liquid Glass covers every control and the glass buttons are reliably tappable. AniList profiles are cached with a proper loading state and a graceful fallback when rate-limited, so they open fast instead of going blank, and the profile header now sits the avatar on the banner edge with your name and follow button beside it.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 9212399,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "0.1.3",
-          "buildVersion": "102",
-          "date": "2026-07-07",
-          "localizedDescription": "Your Library now loads instantly from an on-device cache and keeps working offline. Edits you make without a connection — status, score, and episode or chapter progress — are queued and sync to AniList and MyAnimeList automatically once you're back online. Rate-limited requests retry with backoff instead of failing, the Anime | Manga switch no longer shows the wrong list, and manga chapters always sort in the right order.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 9132843,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "0.1.2",
-          "buildVersion": "101",
-          "date": "2026-07-05",
-          "localizedDescription": "The video player controls get the iOS 26 Liquid Glass look — frosted, translucent buttons — with a thicker, easier-to-grab progress bar. New Liquid Glass Controls toggles in Settings switch the glass off for the player and reader independently. In the manga reader, auto-scroll is now a live speed slider that goes much faster, the play/pause button is always reachable, you can pinch to zoom in vertical mode, and pages load ahead of you so scrolling never stalls.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 9151395,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "0.1.1",
-          "buildVersion": "100",
-          "date": "2026-07-04",
-          "localizedDescription": "Manga now tracks itself. Each manga auto-matches to its AniList entry, and reading chapters updates your progress on AniList, MyAnimeList, and your on-device My Library. A new Anime | Manga switch in the Library tab shows your manga next to your anime, and you can relink a wrong match from the manga's detail screen.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 9106413,
-          "minOSVersion": "15.0"
-        },
-        {
-          "version": "0.1.0",
-          "buildVersion": "99",
-          "date": "2026-07-04",
-          "localizedDescription": "Read manga with manga modules. Vertical strip or paged reading, no loading screens between chapters, auto-scroll, pinch zoom, and a Continue Reading row on Home that takes you back to your exact spot.",
-          "downloadURL": "https://github.com/xibrox/Shirox/releases/download/latest/Shirox.ipa",
-          "size": 9038062,
+          "version": "1.0.7",
+          "buildVersion": "126",
+          "date": "2026-10-29",
+          "localizedDescription": "# Shirox Bangumi 1.0.7 (126)\n\nBangumi 已作为动画元数据来源内置到 App。安装后在模块页或首页来源菜单直接选择 **Bangumi**，无需导入模块 URL 或下载脚本。公开元数据无需 Bangumi 账号，读取条目和封面仍需联网。\n\n- 首页提供评分排行和最新首播，搜索、动画详情和剧集信息读取 Bangumi 数据。\n- 展示标题、别名、封面、简介、评分、日期、标签、制作公司和导演。\n- 元数据来源不再进行串流检查，也不会出现在播放和下载源列表。\n- 兼容旧 Bangumi 来源选择和已收藏条目；详情页可另选安装的播放模块。\n- 本次使用 Release 配置构建，版本为 1.0.7，构建号为 126。\n\n下载：`Shirox.ipa`（iPhone/iPad）、`Shirox-tvos.ipa`（Apple TV）、`Shirox-macOS.dmg`（原生 Mac）、`Shirox-Catalyst.dmg`（Mac Catalyst）。`SHA256SUMS.txt` 提供文件校验值，`Shirox-iOS-dSYMs.zip` 用于 iOS 崩溃符号化。\n\niOS 和 tvOS 安装包未签名，需要自行签名侧载。两个 Mac 包使用临时签名，未经过 Apple 公证。尚未真机验证，也未执行原生 XCTest。\n\n基于 [xibrox/Shirox](https://github.com/xibrox/Shirox)，遵循仓库的 PolyForm Noncommercial 1.0.0 许可证。\n",
+          "downloadURL": "https://github.com/quiteQa/Shirox/releases/download/v1.0.7-bangumi.1/Shirox.ipa",
+          "size": 0,
           "minOSVersion": "15.0"
         }
       ]
     }
   ],
-  "news": [
-    {
-      "title": "New in 1.0.0 - Home Screen quick actions",
-      "identifier": "news-1.0.0-quick-actions",
-      "caption": "Long-press the Shirox app icon to open quick actions right from your Home Screen. Tap Search, Downloads, or Library to jump straight there — the app launches directly onto that tab, whether it was backgrounded or fully closed. The shortcut icons match the tabs, so it's the fastest way into whatever you use most.",
-      "tintColor": "ef4444",
-      "date": "2026-07-13",
-      "notify": true,
-      "appID": "com.shirox.app"
-    },
-    {
-      "title": "New in 0.1.5 - Manga downloads & offline reading",
-      "identifier": "news-0.1.5-manga-downloads",
-      "caption": "You can now download manga chapters for offline reading. Tap to download a single chapter, or flip on selection mode to grab a whole range in one batch, right from the manga's detail screen. Every chapter row shows live download progress and a checkmark when it's done, and downloaded chapters read completely offline — the reader loads pages straight from your device, so there are no loading gaps even with no connection. The Downloads tab has a new Manga section that groups everything you've saved by source and title; open a downloaded manga to browse and read it fully offline.\n\nDownloads are tidier too: deleting a download now cleans up every file it leaves behind instead of eating storage, and removed downloads stay removed rather than quietly redownloading the next time you open the app. Downloaded episodes also recover on their own if playback drops after the app's been in the background, handing audio back cleanly instead of staying silent.",
-      "tintColor": "ef4444",
-      "date": "2026-07-09",
-      "notify": true,
-      "appID": "com.shirox.app"
-    },
-    {
-      "title": "New in 0.1.4 - Player menus & faster profiles",
-      "identifier": "news-0.1.4-player-menus-profiles",
-      "caption": "The player's options open as native menus now: long-press to pick playback speed, quality, audio track, or source without a cramped sheet in the way. Liquid Glass covers every control, and the glass buttons are reliably tappable — no more taps slipping through to the video behind them.\n\nAniList profiles are cached and show a proper loading state, with a graceful fallback when AniList rate-limits, so your profile opens fast and doesn't go blank. The profile header is cleaned up too, with the avatar sitting right on the banner edge and your name and follow button beside it.",
-      "tintColor": "ef4444",
-      "date": "2026-07-08",
-      "notify": true,
-      "appID": "com.shirox.app"
-    },
-    {
-      "title": "New in 0.1.3 - A library that works offline",
-      "identifier": "news-0.1.3-offline-library",
-      "caption": "Your Library now loads instantly from an on-device cache — open the app and your lists are already there, even with no connection. Changes you make while offline (status, score, episode or chapter progress) are queued and sync themselves to AniList and MyAnimeList the moment you're back online, so nothing gets lost.\n\nWhen a provider rate-limits you, requests now retry automatically with backoff instead of failing outright. Also fixed: the Anime | Manga switch occasionally showing the wrong list, and manga chapters now always sort in the right order.",
-      "tintColor": "ef4444",
-      "date": "2026-07-07",
-      "notify": true,
-      "appID": "com.shirox.app"
-    },
-    {
-      "title": "New in 0.1.2 - Liquid Glass player & reader",
-      "identifier": "news-0.1.2-liquid-glass",
-      "caption": "The video player controls now use iOS 26 Liquid Glass: frosted, translucent buttons that pick up the video behind them, with a thicker progress bar that's easier to scrub. Prefer the old solid look? New Liquid Glass Controls toggles in Settings switch it off for the player and the reader independently (shown only on iOS/macOS 26).\n\nThe manga reader's auto-scroll is now a live speed slider instead of a buried preset menu — drag to set exactly how fast, and it goes much faster than before, with play/pause always reachable even when the controls are hidden. Pages now load ahead of you so scrolling never stalls, you can pinch to zoom up to 3x in vertical mode, and the reader buttons are bigger and easier to tap.",
-      "tintColor": "ef4444",
-      "date": "2026-07-05",
-      "notify": true,
-      "appID": "com.shirox.app"
-    },
-    {
-      "title": "New in 0.1.1 - Manga tracking",
-      "identifier": "news-0.1.1-manga-tracking",
-      "caption": "Manga now tracks itself, just like anime. Open a manga and it automatically matches to its AniList entry; as you read, your chapter progress syncs to AniList, MyAnimeList, and your on-device My Library, no buttons to press.\n\nThe Library tab has a new Anime | Manga switch, so your manga sit alongside your anime with the same status, score, and collections. Reading a manga adds it to My Library on its own. If an auto-match ever picks the wrong series, tap the link button on the manga's detail screen to search AniList and relink it, posters and all.",
-      "tintColor": "ef4444",
-      "date": "2026-07-04",
-      "notify": true,
-      "appID": "com.shirox.app"
-    },
-    {
-      "title": "New in 0.1.0 - Manga",
-      "identifier": "news-0.1.0-manga",
-      "caption": "You can now install manga modules and search them from the Search tab, just like anime modules. Every manga has a detail page with cover, tags, synopsis, and a chapter list that remembers what you've read.\n\nThe reader has three modes: vertical strip, paged left-to-right, and paged right-to-left. The next chapter loads ahead of you, so there's no loading screen between chapters. Auto-scroll with adjustable speed, pinch zoom in the paged modes, and the screen stays awake while you read. A new Continue Reading row on Home takes you back to the exact spot you left off.",
-      "tintColor": "ef4444",
-      "date": "2026-07-04",
-      "notify": true,
-      "appID": "com.shirox.app"
-    },
-    {
-      "title": "New in 0.0.94 - My Library holds everything",
-      "identifier": "news-0.0.94-my-library-everything",
-      "caption": "My Library now holds everything, not just anime matched to AniList or MyAnimeList. Titles you watch from streaming modules without a provider match, and your own imported local files, now appear in My Library too. They auto-track as you watch and can be bookmarked by hand, with the same collections, status, and scoring as any other title. Tap an entry to open it: module titles reopen their detail screen, local files resume playback.\n\nFixed: finishing a show now correctly marks it Completed in My Library at the right episode, instead of getting stuck on Watching a couple of episodes short.",
-      "tintColor": "ef4444",
-      "date": "2026-06-22",
-      "notify": true,
-      "appID": "com.shirox.app"
-    },
-    {
-      "title": "New in 0.0.92 - Local Library",
-      "identifier": "news-0.0.92-local-library",
-      "caption": "Track anime without signing into any account. A My Library section lives in the Library tab and works completely on device: bookmark anime, set a status, rate it, and create collections. Auto-tracking keeps your episode progress in sync as you watch, and your scores now survive switching Score Format. Player: a Retry button when buffering stalls, a resume seek fix for HLS, smoother controls, cleaner double-tap feedback, and 2x hold that sticks while you drag. Plus Library search bar and source switcher fixes, and a Local Files promo card on the Modules screen.",
-      "tintColor": "ef4444",
-      "date": "2026-06-20",
-      "notify": true,
-      "appID": "com.shirox.app"
-    },
-    {
-      "title": "New in 0.0.91 - Local Files",
-      "identifier": "news-0.0.91-local-files",
-      "caption": "Play videos straight from your device. Browse to any video in the Files app and watch it in the Shirox player with full controls: AirPlay, PiP, subtitles, and Continue Watching all included. Import your own subtitle files before or during playback.\n\nAlso fixed: the refresh and Edit buttons now appear at the top of the module list in Search, and the Local Files Browse button has a cleaner look.",
-      "tintColor": "ef4444",
-      "date": "2026-06-19",
-      "notify": true,
-      "appID": "com.shirox.app"
-    }
-  ]
+  "news": []
 }

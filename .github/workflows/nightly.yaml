@@ -1,159 +1,192 @@
-# shamelessly copied from https://github.com/cranci1/Luna/blob/main/.github/workflows/build.yml
-
-name: Build and upload nightly
+name: Release Shirox Bangumi
 
 on:
- push:
-   branches:
-     - main
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - Configurations/Release.json
+      - .github/workflows/nightly.yaml
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
 
 env:
- FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
- # The release every build lands in. It was "beta", a pre-release named "First".
- RELEASE_TAG: latest
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+concurrency:
+  group: shirox-release
+  cancel-in-progress: false
 
 jobs:
- prepare-release:
-   name: Prepare release
-   runs-on: ubuntu-latest
-   permissions:
-     contents: write
-   steps:
-     - name: Checkout repository
-       uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+  check:
+    if: github.repository == 'quiteQa/Shirox'
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.release.outputs.tag }}
+      title: ${{ steps.release.outputs.title }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - name: Check release metadata, strings and icons
+        run: |
+          python3 scripts/verify_release.py
+          python3 scripts/i18n/i18n.py check
+          python3 scripts/icons/icons.py check
+          bash -n buildipa.sh buildtvos.sh builddmg.sh buildcatalyst.sh
+      - name: Read release identity
+        id: release
+        run: |
+          python3 - <<'PY'
+          import json, os
+          release = json.load(open('Configurations/Release.json'))
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              for key in ['tag', 'title']:
+                  print(f'{key}={release[key]}', file=output)
+          PY
 
-     # The tag follows main, so the release's source is the commit its builds came from.
-     - name: Move the release tag to this commit
-       run: |
-         git tag -f "$RELEASE_TAG"
-         git push -f origin "refs/tags/$RELEASE_TAG"
+  build:
+    needs: check
+    runs-on: macos-26
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: ios
+            script: buildipa.sh
+            asset: Shirox.ipa
+          - platform: tvos
+            script: buildtvos.sh
+            asset: Shirox-tvos.ipa
+          - platform: macos
+            script: builddmg.sh
+            asset: Shirox-macOS.dmg
+          - platform: catalyst
+            script: buildcatalyst.sh
+            asset: Shirox-Catalyst.dmg
+    env:
+      PLATFORM: ${{ matrix.platform }}
+      BUILD_SCRIPT: ${{ matrix.script }}
+      ASSET_NAME: ${{ matrix.asset }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+      - name: Build and package Release configuration
+        run: |
+          xcodebuild -version
+          bash "$BUILD_SCRIPT" 2>&1 | tee "$RUNNER_TEMP/build-$PLATFORM.log"
+      - name: Verify the app inside the distributable package
+        run: |
+          VERIFY_DIR="$RUNNER_TEMP/verify-$PLATFORM"
+          mkdir -p "$VERIFY_DIR"
+          if [[ "$ASSET_NAME" == *.ipa ]]; then
+            unzip -q "build/$ASSET_NAME" -d "$VERIFY_DIR"
+            python3 scripts/verify_release.py "$VERIFY_DIR/Payload/Shirox.app"
+          else
+            hdiutil attach -nobrowse -readonly "build/$ASSET_NAME" -mountpoint "$VERIFY_DIR"
+            trap 'hdiutil detach "$VERIFY_DIR"' EXIT
+            python3 scripts/verify_release.py "$VERIFY_DIR/Shirox.app"
+            codesign --verify --deep --strict "$VERIFY_DIR/Shirox.app"
+          fi
+      - name: Collect release assets and checksums
+        run: |
+          mkdir -p dist
+          cp "build/$ASSET_NAME" dist/
+          if [[ "$PLATFORM" == ios ]]; then
+            test -d build/dSYMs
+            test -n "$(find build/dSYMs -name '*.dSYM' -print -quit)"
+            ditto -c -k --keepParent build/dSYMs dist/Shirox-iOS-dSYMs.zip
+          fi
+          python3 - <<'PY'
+          import hashlib
+          from pathlib import Path
+          for path in list(Path('dist').iterdir()):
+              checksum = hashlib.sha256(path.read_bytes()).hexdigest()
+              path.with_name(path.name + '.sha256').write_text(f'{checksum}  {path.name}\n')
+          PY
+      - name: Upload verified release assets
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-${{ matrix.platform }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 30
+      - name: Keep build logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: logs-${{ matrix.platform }}
+          path: ${{ runner.temp }}/build-${{ matrix.platform }}.log
+          if-no-files-found: warn
+          retention-days: 30
 
-     # Made once here, before the builds, which upload to it side by side.
-     - name: Create the release if it's missing
-       env:
-         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       run: |
-         gh release view "$RELEASE_TAG" >/dev/null 2>&1 || \
-           gh release create "$RELEASE_TAG" --verify-tag --title "Shirox" --notes "Building…" --latest
-
- build-ios:
-   name: Build iOS IPA
-   needs: prepare-release
-   runs-on: macos-26
-   permissions:
-     contents: write
-   steps:
-     - name: Checkout repository
-       uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-     - name: Make build script executable
-       run: chmod +x ./buildipa.sh
-
-     - name: Build iOS IPA
-       run: ./buildipa.sh
-
-     - name: Upload IPA
-       uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-       with:
-         name: Shirox-Nightly-IPA
-         path: build/Shirox.ipa
-
-     - name: Upload IPA to the release
-       env:
-         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       run: gh release upload "$RELEASE_TAG" build/Shirox.ipa --clobber
-
-     - name: Update apps.json
-       env:
-         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       run: |
-         IPA_SIZE=$(wc -c < build/Shirox.ipa | tr -d ' ')
-         BUILD_DATE=$(date -u +%Y-%m-%d)
-         jq --argjson size "$IPA_SIZE" --arg date "$BUILD_DATE" \
-           '.apps[0].versions[0].size = $size | .apps[0].versions[0].date = $date' \
-           apps.json > apps.json.tmp && mv apps.json.tmp apps.json
-         git config user.name "github-actions[bot]"
-         git config user.email "github-actions[bot]@users.noreply.github.com"
-         git add apps.json
-         git diff --cached --quiet || (git commit -m "chore: update apps.json [skip ci]" && git push origin HEAD:main)
-
- build-catalyst:
-   name: Build Mac Catalyst DMG
-   needs: prepare-release
-   runs-on: macos-26
-   permissions:
-     contents: write
-   steps:
-     - name: Checkout repository
-       uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-     - name: Make build script executable
-       run: chmod +x ./buildcatalyst.sh
-
-     - name: Build Mac Catalyst DMG
-       run: ./buildcatalyst.sh
-
-     - name: Upload Catalyst DMG
-       uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-       with:
-         name: Shirox-Nightly-Catalyst-DMG
-         path: build/Shirox-Catalyst.dmg
-
-     - name: Upload Catalyst DMG to the release
-       env:
-         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       run: gh release upload "$RELEASE_TAG" build/Shirox-Catalyst.dmg --clobber
-
- build-macos:
-   name: Build native macOS DMG
-   needs: prepare-release
-   runs-on: macos-26
-   permissions:
-     contents: write
-   steps:
-     - name: Checkout repository
-       uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-     - name: Make build script executable
-       run: chmod +x ./builddmg.sh
-
-     - name: Build native macOS DMG
-       run: ./builddmg.sh
-
-     - name: Upload macOS DMG
-       uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-       with:
-         name: Shirox-Nightly-macOS-DMG
-         path: build/Shirox-macOS.dmg
-
-     - name: Upload macOS DMG to the release
-       env:
-         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       run: gh release upload "$RELEASE_TAG" build/Shirox-macOS.dmg --clobber
-
- publish-release:
-   name: Publish release
-   needs: [build-ios, build-catalyst, build-macos]
-   runs-on: ubuntu-latest
-   permissions:
-     contents: write
-   steps:
-     - name: Checkout repository
-       uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-     # Named and described from apps.json's newest version, a full release rather than a
-     # pre-release, and the one GitHub shows as Latest.
-     - name: Name and publish the release
-       env:
-         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       run: |
-         VERSION=$(jq -r '.apps[0].versions[0].version' apps.json)
-         BUILD=$(jq -r '.apps[0].versions[0].buildVersion' apps.json)
-         jq -r '.apps[0].versions[0].localizedDescription' apps.json > notes.md
-         printf '\n\n**Downloads:** Shirox.ipa (iPhone, iPad), Shirox-macOS.dmg (Mac), Shirox-Catalyst.dmg (Mac, Catalyst build).\n' >> notes.md
-         gh release edit "$RELEASE_TAG" \
-           --title "Shirox $VERSION ($BUILD)" \
-           --notes-file notes.md \
-           --prerelease=false \
-           --draft=false \
-           --latest
+  publish:
+    needs: [check, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      RELEASE_TAG: ${{ needs.check.outputs.tag }}
+      RELEASE_TITLE: ${{ needs.check.outputs.title }}
+      BUILD_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          ref: main
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: release-*
+          path: release-assets
+          merge-multiple: true
+      - name: Verify the complete asset set
+        working-directory: release-assets
+        run: |
+          for file in Shirox.ipa Shirox-tvos.ipa Shirox-macOS.dmg Shirox-Catalyst.dmg Shirox-iOS-dSYMs.zip; do
+            test -s "$file"
+            test -s "$file.sha256"
+          done
+          cat ./*.sha256 > SHA256SUMS.txt
+          sha256sum --check SHA256SUMS.txt
+      - name: Prepare a draft release and upload verified packages
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            test "$(gh release view "$RELEASE_TAG" --json isDraft --jq '.isDraft')" = true
+          else
+            gh release create "$RELEASE_TAG" --target "$BUILD_SHA" --draft --title "$RELEASE_TITLE" --notes-file RELEASE_NOTES.md
+          fi
+          gh release upload "$RELEASE_TAG" release-assets/Shirox.ipa release-assets/Shirox-tvos.ipa release-assets/Shirox-macOS.dmg release-assets/Shirox-Catalyst.dmg release-assets/Shirox-iOS-dSYMs.zip release-assets/SHA256SUMS.txt --clobber
+      - name: Update the side-loading source with the actual package size
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          release = json.loads(Path('Configurations/Release.json').read_text())
+          assert release['tag'] == os.environ['RELEASE_TAG'], 'A newer release changed main'
+          path = Path('apps.json')
+          source = json.loads(path.read_text())
+          version = source['apps'][0]['versions'][0]
+          assert (version['version'], version['buildVersion']) == (release['version'], release['build'])
+          version['size'] = Path('release-assets/Shirox.ipa').stat().st_size
+          version['date'] = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+          path.write_text(json.dumps(source, ensure_ascii=False, indent=2) + '\n')
+          PY
+          python3 scripts/verify_release.py
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add apps.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Release: update side-loading package size [skip ci]"
+            git push origin HEAD:main
+          fi
+      - name: Publish the release
+        run: |
+          gh release edit "$RELEASE_TAG" --draft=false --prerelease=false --latest

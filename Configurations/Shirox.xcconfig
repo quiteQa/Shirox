@@ -2,7 +2,8 @@ APP_NAME = Shirox
 DEVELOPMENT_TEAM = JRMTH65Z3H
 PRODUCT_BUNDLE_IDENTIFIER = com.shirox.app
 CODE_SIGN_STYLE = Automatic
-GITHUB_REPO = xibrox/Shirox
+GITHUB_REPO = quiteQa/Shirox
+INFOPLIST_KEY_GithubRepo = $(GITHUB_REPO)
 
 // Swift concurrency checking level: minimal | targeted | complete
 SWIFT_STRICT_CONCURRENCY = targeted
