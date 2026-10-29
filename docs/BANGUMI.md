@@ -21,3 +21,9 @@ The earlier imported-module integration passed all four app builds and iOS test-
 The workflow runs the module's 31 offline JavaScript tests, checks localization and icons, builds all four app schemes, compiles iOS tests without starting a simulator, and verifies both Bangumi resources exist in the packaged iOS app. `MetadataModuleTests` additionally covers bundle loading, legacy-module classification, duplicate suppression and source selection after a profile reload.
 
 XCTest has not been executed and real-device behavior has not been verified. Existing libzstd module-import and AppIntents metadata warnings remain. The upstream `TSAudioTimestampsTests` expression is split into intermediate values to avoid a type-check timeout without changing its behavior.
+
+## Verified built-in download
+
+[Download the unsigned iOS artifact](https://github.com/quiteQa/shirox-bangumi/actions/runs/40859332293/artifacts/12891605917) · [Build record](https://github.com/quiteQa/shirox-bangumi/actions/runs/40859332293) · [Strict SwiftLint](https://github.com/quiteQa/shirox-bangumi/actions/runs/40859332348)
+
+Source commit `50b31671a002842708427de05fbb68098f6ce016` passed all four app builds and arm64 iOS test-target compilation. The IPA's Bangumi JSON and script exactly match the bundled source, and the 31 JavaScript tests passed. Unzip and sign the IPA, install it, then select Bangumi directly. XCTest was not executed and real-device behavior is not yet verified.
