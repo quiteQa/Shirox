@@ -36,6 +36,10 @@ struct ModuleListView: View {
     private let localFilesModuleURL = "https://raw.githubusercontent.com/xibrox/local-files-module/refs/heads/main/local.json"
     private let jellyfinModuleURL = "https://raw.githubusercontent.com/xibrox/jellyfin-module/refs/heads/main/jellyfin.json"
 
+    private var installedModules: [ModuleDefinition] {
+        moduleManager.modules.filter { $0.id != BuiltInMetadataModules.bangumiID }
+    }
+
     var body: some View {
         List {
                 addModuleSection
@@ -91,6 +95,11 @@ struct ModuleListView: View {
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.clear)
                     }
+                    if let bangumi = BuiltInMetadataModules.bangumi {
+                        builtInMetadataRow(bangumi)
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(Color.clear)
+                    }
                     // Home and Search from Simkl — offered while signed in, as its search needs the account.
                     if simklAuth.isLoggedIn {
                         builtInProviderRow(.simkl)
@@ -98,12 +107,12 @@ struct ModuleListView: View {
                             .listRowBackground(Color.clear)
                     }
 
-                    if moduleManager.modules.isEmpty {
+                    if installedModules.isEmpty {
                         emptyModulesView
                             .listRowInsets(EdgeInsets())
                             .listRowBackground(Color.clear)
                     } else {
-                        ForEach(moduleManager.modules) { module in
+                        ForEach(installedModules) { module in
                             moduleRow(module)
                                 .listRowInsets(EdgeInsets())
                                 .listRowBackground(Color.clear)
@@ -515,6 +524,45 @@ struct ModuleListView: View {
         #endif
         .padding(.horizontal, 16)
         .padding(.vertical, 4)
+    }
+
+    private func builtInMetadataRow(_ module: ModuleDefinition) -> some View {
+        let selected = discovery.usesMetadata && discovery.metadataModuleID == module.id
+        return Button {
+            discovery.chooseMetadataModule(module)
+            #if os(iOS)
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            #endif
+        } label: {
+            HStack(spacing: 14) {
+                Text(verbatim: "B")
+                    .font(.title2.bold())
+                    .foregroundStyle(.white)
+                    .frame(width: 44, height: 44)
+                    .background(Color.pink, in: RoundedRectangle(cornerRadius: 10))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(module.sourceName).font(.headline)
+                    Text("modules.built_in_anime_metadata")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                if selected {
+                    IconView("checkmark.circle.fill")
+                        .foregroundStyle(Color.primary)
+                        .font(.title3)
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
+            .background(
+                selected ? Color.primary.opacity(0.08) : Color.black.opacity(0.001),
+                in: RoundedRectangle(cornerRadius: 12)
+            )
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Built-in Provider Row

@@ -28,7 +28,7 @@ final class DiscoverySource: ObservableObject {
     @Published private(set) var metadataModuleID: String?
 
     var metadataModule: ModuleDefinition? {
-        ModuleManager.shared.modules.first { $0.id == metadataModuleID && $0.isMetadata }
+        ModuleManager.shared.metadataModules.first { $0.id == metadataModuleID }
     }
 
     var sourceID: String {

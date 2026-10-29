@@ -187,7 +187,7 @@ struct ProviderMenuButton: View {
             if simklAuth.isLoggedIn {
                 Button { discovery.chooseSimkl() } label: { label(.simkl) }
             }
-            ForEach(modules.modules.filter(\.isMetadata)) { module in
+            ForEach(modules.metadataModules) { module in
                 Button { discovery.chooseMetadataModule(module) } label: { Text(module.sourceName) }
             }
         } label: {

@@ -35,7 +35,7 @@ struct ModuleDefinition: Codable, Identifiable, Equatable {
     var isLocalPlayback: Bool { supportsLocalPlayback == true }
     var isJellyfin: Bool { supportsJellyfin == true }
     var isManga: Bool { type == "mangas" || type == "manga" }
-    var isMetadata: Bool { type == "metadata" }
+    var isMetadata: Bool { type == "metadata" || id == BuiltInMetadataModules.bangumiID }
     var isAnimePlayback: Bool { !isManga && !isMetadata }
 
     /// The source site's page for a title, from the `href` this module gave it — for opening in a

@@ -1,0 +1,9 @@
+{
+  "sourceName": "Bangumi",
+  "version": "0.3.0",
+  "baseUrl": "https://bgm.tv",
+  "scriptUrl": "https://raw.githubusercontent.com/quiteQa/shirox-bangumi/main/bangumi.js",
+  "type": "metadata",
+  "asyncJS": true,
+  "language": "中文 / 日本語"
+}

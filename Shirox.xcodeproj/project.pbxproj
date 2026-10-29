@@ -1240,6 +1240,12 @@
 		FEEE0000000000000000000F /* MetadataCatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE0000000000000000000D /* MetadataCatalogView.swift */; };
 		FEEE00000000000000000010 /* MetadataCatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE0000000000000000000D /* MetadataCatalogView.swift */; };
 		FEEE00000000000000000012 /* MetadataModuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEE00000000000000000011 /* MetadataModuleTests.swift */; };
+		BFEE00000000000000000002 /* Bangumi.js in Resources */ = {isa = PBXBuildFile; fileRef = BFEE00000000000000000001 /* Bangumi.js */; };
+		BFEE00000000000000000003 /* Bangumi.js in Resources */ = {isa = PBXBuildFile; fileRef = BFEE00000000000000000001 /* Bangumi.js */; };
+		BFEE00000000000000000004 /* Bangumi.js in Resources */ = {isa = PBXBuildFile; fileRef = BFEE00000000000000000001 /* Bangumi.js */; };
+		BFEE00000000000000000006 /* Bangumi.json in Resources */ = {isa = PBXBuildFile; fileRef = BFEE00000000000000000005 /* Bangumi.json */; };
+		BFEE00000000000000000007 /* Bangumi.json in Resources */ = {isa = PBXBuildFile; fileRef = BFEE00000000000000000005 /* Bangumi.json */; };
+		BFEE00000000000000000008 /* Bangumi.json in Resources */ = {isa = PBXBuildFile; fileRef = BFEE00000000000000000005 /* Bangumi.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1806,6 +1812,8 @@
 		FEEE00000000000000000009 /* MetadataDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataDetailView.swift; sourceTree = "<group>"; };
 		FEEE0000000000000000000D /* MetadataCatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataCatalogView.swift; sourceTree = "<group>"; };
 		FEEE00000000000000000011 /* MetadataModuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataModuleTests.swift; sourceTree = "<group>"; };
+		BFEE00000000000000000001 /* Bangumi.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Bangumi.js; sourceTree = "<group>"; };
+		BFEE00000000000000000005 /* Bangumi.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Bangumi.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2304,6 +2312,8 @@
 				2E7F10F162A39F3D89AE3150 /* SeanimeRuntime.js */,
 				FCBEAC7148133CCF2D13E786 /* SeanimeInstall.js */,
 				C050BE8CB634CB8373E369EF /* ExtensionRuntime.js */,
+				BFEE00000000000000000001 /* Bangumi.js */,
+				BFEE00000000000000000005 /* Bangumi.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2769,6 +2779,8 @@
 				564F14851F51102FF23997E2 /* SeanimeRuntime.js in Resources */,
 				6DAA1915860752FC4FE7D374 /* SeanimeInstall.js in Resources */,
 				FEE557BE2CC7D535BA4119DE /* ExtensionRuntime.js in Resources */,
+				BFEE00000000000000000002 /* Bangumi.js in Resources */,
+				BFEE00000000000000000006 /* Bangumi.json in Resources */,
 				96F99AC1B5109B2D802475A4 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2791,6 +2803,8 @@
 				8394FB1A2900AA0612B931C8 /* SeanimeRuntime.js in Resources */,
 				40B24A0864D764C080CF4171 /* SeanimeInstall.js in Resources */,
 				864C300F1E47DB2105661644 /* ExtensionRuntime.js in Resources */,
+				BFEE00000000000000000003 /* Bangumi.js in Resources */,
+				BFEE00000000000000000007 /* Bangumi.json in Resources */,
 				A72DD4633E5DB0EC71B9EB98 /* Localizable.xcstrings in Resources */,
 				01C046B4AAC9A7DA8AAA3471 /* manga.icon in Resources */,
 			);
@@ -2806,6 +2820,8 @@
 				AD0D3B00BB0506507CBCA03B /* SeanimeRuntime.js in Resources */,
 				F5F09B5AEE05E5CB69F486A6 /* SeanimeInstall.js in Resources */,
 				C10F42DA684E7AF85A2EB0BF /* ExtensionRuntime.js in Resources */,
+				BFEE00000000000000000004 /* Bangumi.js in Resources */,
+				BFEE00000000000000000008 /* Bangumi.json in Resources */,
 				56CE3B31B9DDE9D8587B9443 /* Localizable.xcstrings in Resources */,
 				4A2232B46F40B6D1B5862D17 /* manga.icon in Resources */,
 			);

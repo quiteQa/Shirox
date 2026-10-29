@@ -84,7 +84,7 @@ struct MetadataDetailView: View {
         error = nil
         episodeError = nil
         defer { loading = false }
-        guard let module = ModuleManager.shared.modules.first(where: { $0.id == identity.moduleID && $0.isMetadata }) else {
+        guard let module = ModuleManager.shared.metadataModules.first(where: { $0.id == identity.moduleID }) else {
             error = String(localized: "modules.metadata_unavailable")
             return
         }

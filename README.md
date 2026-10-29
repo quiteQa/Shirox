@@ -1,8 +1,8 @@
-> **Bangumi 元数据修改版**：此 Fork 将 Bangumi 接入首页、搜索和动画详情，并为 `type: "metadata"` 模块使用元数据健康检查，避免请求视频串流。
+> **内置 Bangumi 动画元数据**：此 Fork 将 Bangumi 随 App 打包，接入首页、搜索和动画详情。它与 AniList、MyAnimeList 一起出现在来源列表中，无需导入模块 URL 或下载脚本。
 >
-> [下载已验证的未签名 iOS 安装包](https://github.com/quiteQa/shirox-bangumi/actions/runs/40844088237/artifacts/12883669458)（解压后自行签名安装）· [设置与验证记录](docs/BANGUMI.md) · [Bangumi 模块仓库](https://github.com/quiteQa/shirox-bangumi)
+> [构建、安装与验证记录](docs/BANGUMI.md) · [Bangumi 模块仓库](https://github.com/quiteQa/shirox-bangumi)
 >
-> 安装此修改版后，导入或刷新模块至 **0.3.0**：`https://raw.githubusercontent.com/quiteQa/shirox-bangumi/main/bangumi.json`，然后在模块页或首页来源菜单选择 Bangumi。下方保留的上游安装链接指向官方版本。
+> 安装含内置资源的修改版后，在模块页或首页来源菜单直接选择 **Bangumi**。公开元数据无需登录；读取内容仍需连接 bgm.tv。下方保留的上游安装链接指向官方版本。
 
 <div align="center">
 

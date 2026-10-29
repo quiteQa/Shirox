@@ -1,5 +1,28 @@
 import Foundation
 
+/// Bundled metadata sources are available without installing or downloading a script.
+@MainActor
+enum BuiltInMetadataModules {
+    // Keep the original identity so bookmarks and discovery settings survive the upgrade.
+    nonisolated static let bangumiID = "https://raw.githubusercontent.com/quiteQa/shirox-bangumi/main/bangumi.js"
+    static let bangumi = try? loadBangumi(from: .main)
+
+    static func loadBangumi(from bundle: Bundle) throws -> ModuleDefinition {
+        guard let manifest = bundle.url(forResource: "Bangumi", withExtension: "json"),
+              let script = bundle.url(forResource: "Bangumi", withExtension: "js") else {
+            throw CocoaError(.fileNoSuchFile)
+        }
+        var module = try JSONDecoder().decode(ModuleDefinition.self, from: Data(contentsOf: manifest))
+        guard module.id == bangumiID, module.type == "metadata" else { throw ProviderError.unsupported }
+        module.scriptContent = try String(contentsOf: script, encoding: .utf8)
+        return module
+    }
+
+    static func merging(_ installed: [ModuleDefinition]) -> [ModuleDefinition] {
+        (bangumi.map { [$0] } ?? []) + installed.filter { $0.isMetadata && $0.id != bangumiID }
+    }
+}
+
 /// A separate runner prevents reading metadata from replacing the playback module's JS.
 @MainActor
 final class ModuleMetadataService {
@@ -7,10 +30,17 @@ final class ModuleMetadataService {
     private let runner = ModuleJSRunner()
     private var loaded = false
 
-    init(module: ModuleDefinition) { self.module = module }
+    init(module: ModuleDefinition) {
+        self.module = module.id == BuiltInMetadataModules.bangumiID
+            ? (BuiltInMetadataModules.bangumi ?? module) : module
+    }
 
     private func prepare() async throws {
         guard module.isMetadata else { throw ProviderError.unsupported }
+        // A broken bundle must report an error rather than silently downloading executable code.
+        if module.id == BuiltInMetadataModules.bangumiID, BuiltInMetadataModules.bangumi == nil {
+            throw CocoaError(.fileNoSuchFile)
+        }
         if !loaded {
             try await runner.load(module: module)
             loaded = true

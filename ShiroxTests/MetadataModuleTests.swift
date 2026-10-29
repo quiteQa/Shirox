@@ -20,6 +20,50 @@ final class MetadataModuleTests: XCTestCase {
         """.utf8))
     }
 
+    func testBangumiIsBundledAndAvailableWithoutInstalledModules() throws {
+        let bundled = try BuiltInMetadataModules.loadBangumi(from: .main)
+        XCTAssertEqual(bundled.id, BuiltInMetadataModules.bangumiID)
+        XCTAssertEqual(bundled.sourceName, "Bangumi")
+        XCTAssertTrue(bundled.isMetadata)
+        XCTAssertFalse(bundled.isAnimePlayback)
+        let script = try XCTUnwrap(bundled.scriptContent)
+        XCTAssertTrue(script.contains("async function searchMetadata"))
+        XCTAssertTrue(script.contains("async function extractMetadata"))
+        XCTAssertTrue(script.contains("async function extractEpisodeMetadata"))
+        XCTAssertTrue(script.contains("async function browseMetadata"))
+        XCTAssertEqual(BuiltInMetadataModules.merging([]).map(\.id), [bundled.id])
+    }
+
+    func testLegacyBangumiUsesBundledMetadataAndDoesNotDuplicateItsSource() throws {
+        let legacy = try JSONDecoder().decode(ModuleDefinition.self, from: Data("""
+        {"sourceName":"Old Bangumi","version":"0.2.0","scriptUrl":"\(BuiltInMetadataModules.bangumiID)","type":"anime"}
+        """.utf8))
+        XCTAssertTrue(legacy.isMetadata)
+        XCTAssertFalse(legacy.isAnimePlayback)
+        let external = try module()
+        let sources = BuiltInMetadataModules.merging([legacy, external])
+        XCTAssertEqual(sources.map(\.id), [legacy.id, external.id])
+        XCTAssertEqual(sources.first?.sourceName, "Bangumi")
+        XCTAssertEqual(sources.first?.version, "0.3.0")
+    }
+
+    func testBuiltInChoiceSurvivesProfileReloadWithoutAUserInstalledModule() throws {
+        let suite = "metadata-builtin-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let source = DiscoverySource(defaults: defaults, selectProvider: { _ in })
+        source.chooseMetadataModule(try XCTUnwrap(BuiltInMetadataModules.bangumi))
+        XCTAssertTrue(source.usesMetadata)
+        XCTAssertEqual(source.metadataModule?.sourceName, "Bangumi")
+        source.chooseProvider(.anilist)
+        source.reloadForProfileSwitch()
+        XCTAssertFalse(source.usesMetadata)
+        defaults.set("metadata", forKey: DiscoverySource.choiceKey)
+        source.reloadForProfileSwitch()
+        XCTAssertTrue(source.usesMetadata)
+        XCTAssertEqual(source.metadataModuleID, BuiltInMetadataModules.bangumiID)
+    }
+
     func testMetadataIsNotAMangaOrPlaybackModule() throws {
         let metadata = try module()
         XCTAssertTrue(metadata.isMetadata)

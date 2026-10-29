@@ -1,31 +1,23 @@
-# Bangumi metadata modules
+# Built-in Bangumi metadata
 
-This change adds type: metadata modules to Home, Search and title details, separately from playback.
+Bangumi ships inside this fork as an animation metadata source, alongside AniList and MyAnimeList. Install a build of this fork, then select **Bangumi** in Settings → Modules or the Home source menu. No module URL, script download or Bangumi account is required. Metadata and artwork still need network access to Bangumi.
 
-Use a build with this patch, then import https://raw.githubusercontent.com/quiteQa/shirox-bangumi/main/bangumi.json . Refresh an older installed module to version 0.3.0 and run Check Again. Metadata health checks call searchMetadata and extractMetadata, never video streams.
+The bundled `Shirox/Resources/Bangumi.json` and `Bangumi.js` are copied into every app target, including iOS, macOS, tvOS and Catalyst. A separate JavaScript runner reads them directly from the app bundle. Updating the bundled source requires an app update; refreshing imported modules does not replace its code. A missing bundled resource produces an error instead of fetching a script remotely.
 
-Select Bangumi in Modules or the Home source menu. Home displays score ranking and premiere-date catalogs. Title details display native metadata and can be saved to the local library. Find a playback source searches installed website modules; the user confirms the matching title. Playback and downloads remain on that website module.
+Home provides score ranking and premiere-date catalogs. Search and title details provide titles, cover art, synopsis, ratings, tags, studios, directors and episodes. A metadata health check never requests a video stream. To watch a title, choose a matching title from an installed playback module using the detail page's playback-source picker.
 
-Bangumi IDs remain in a namespaced identity and are not sent as AniList/MAL IDs. Metadata reading uses a separate JS runner. New settings participate in backups and profile switching.
+## Upgrading from the imported module
 
-The contract consists of searchMetadata(keyword), extractMetadata(subjectID), extractEpisodeMetadata(subjectID), and browseMetadata(topRated or newest, page), returning JSON strings documented in the module repository.
+The built-in source retains the previous Bangumi module identity. Existing source selection and bookmarked metadata titles continue to work. An imported copy is hidden from the source list, and metadata reads always use the bundled version. Older Bangumi modules are classified as metadata even if their manifest used a playback type, so they cannot be selected for streaming or downloads. Other imported metadata modules remain available.
 
-MetadataModuleTests covers classification, score conversion, namespaced IDs, persistence, routing, and health checks that must not request a stream. New files are registered for iOS, macOS, tvOS and the iOS test target; Catalyst uses the iOS target. UI strings cover all 13 languages.
+The built-in source is kept separately from user-installed modules. Removing imported modules, restoring backups and switching profiles do not remove the bundled source. Source selection remains a per-profile preference. Bangumi IDs stay namespaced and are not sent as AniList or MyAnimeList IDs.
 
-## Verified source and builds
+## Source and validation
 
-This fork applies the same native source change as the verified patch in [quiteQa/shirox-bangumi](https://github.com/quiteQa/shirox-bangumi/blob/4c8be565a3ee2b67ebec76cd1812f202c3e272d2/native/shirox-metadata.patch), on upstream commit `398d36715b34a17ec68bfd52d792f7a2e7db06f5`.
+The fork starts at upstream commit `398d36715b34a17ec68bfd52d792f7a2e7db06f5`. The complete patch and build workflow are maintained in [quiteQa/shirox-bangumi](https://github.com/quiteQa/shirox-bangumi/tree/main/native).
 
-[Build run 40844088237](https://github.com/quiteQa/shirox-bangumi/actions/runs/40844088237) passed all four app builds: iOS, macOS, tvOS and Mac Catalyst. The iOS test target also compiled successfully for the arm64 iOS Simulator. XCTest was not executed, no simulator was booted, and real-device behavior has not been verified. Existing libzstd module-import and AppIntents metadata warnings remain.
+The earlier imported-module integration passed all four app builds and iOS test-target compilation in [run 40844088237](https://github.com/quiteQa/shirox-bangumi/actions/runs/40844088237). That run's IPA predates the built-in resources and still requires module import. Use a newer successful [metadata build](https://github.com/quiteQa/shirox-bangumi/actions/workflows/shirox-metadata-build.yml) for this version, and download its `metadata-Shirox_iOS` artifact. Unzip and sign `Shirox-metadata-unsigned.ipa` with your own sideloading method. Artifacts require a GitHub login and expire according to retention settings.
 
-The module's 31 offline JavaScript tests, localization and icon checks passed. [Strict SwiftLint](https://github.com/quiteQa/shirox-bangumi/actions/runs/40844088197) also passed. A small upstream test expression in `TSAudioTimestampsTests` was split into intermediate values to avoid a compiler type-check timeout without changing the test's behavior.
+The workflow runs the module's 31 offline JavaScript tests, checks localization and icons, builds all four app schemes, compiles iOS tests without starting a simulator, and verifies both Bangumi resources exist in the packaged iOS app. `MetadataModuleTests` additionally covers bundle loading, legacy-module classification, duplicate suppression and source selection after a profile reload.
 
-## Install on iPhone or iPad
-
-1. [Download the verified iOS artifact](https://github.com/quiteQa/shirox-bangumi/actions/runs/40844088237/artifacts/12883669458), unzip it and sign `Shirox-metadata-unsigned.ipa` with your own sideloading method. This is an unsigned development build.
-2. Import or refresh the module JSON URL above to version **0.3.0**.
-3. Select Bangumi in Modules or the Home source menu. Re-run the module check if an old stream error remains.
-
-Bangumi provides metadata. To watch a title, use the detail page's playback-source picker and select a matching title from an installed playback module.
-
-The upstream installation links elsewhere in the README point to the official app, which does not include this native metadata integration. GitHub Actions artifacts require a GitHub login to download and are subject to retention expiry.
+XCTest has not been executed and real-device behavior has not been verified. Existing libzstd module-import and AppIntents metadata warnings remain. The upstream `TSAudioTimestampsTests` expression is split into intermediate values to avoid a type-check timeout without changing its behavior.

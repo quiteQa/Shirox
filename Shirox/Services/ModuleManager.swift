@@ -17,6 +17,7 @@ final class ModuleManager: ObservableObject {
     static let shared = ModuleManager()
 
     @Published var modules: [ModuleDefinition] = []
+    var metadataModules: [ModuleDefinition] { BuiltInMetadataModules.merging(modules) }
     @Published var activeModule: ModuleDefinition?
     @Published var moduleReadyId: String?
     @Published var isLoading = false
@@ -336,7 +337,10 @@ final class ModuleManager: ObservableObject {
     // MARK: - Reorder Modules
 
     func moveModules(from source: IndexSet, to destination: Int) {
-        modules.move(fromOffsets: source, toOffset: destination)
+        let bundledCopies = modules.filter { $0.id == BuiltInMetadataModules.bangumiID }
+        var movable = modules.filter { $0.id != BuiltInMetadataModules.bangumiID }
+        movable.move(fromOffsets: source, toOffset: destination)
+        modules = movable + bundledCopies
         saveToStorage()
     }
 
